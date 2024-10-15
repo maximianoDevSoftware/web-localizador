@@ -6,19 +6,22 @@ import { Server } from "socket.io"; // Importando o Server do socket.io
 import { conexoesSocket } from "./services/connectSocketServer";
 
 const dev = process.env.NODE_ENV !== "production";
-/**Inicializando o app */
+
+/** Inicializando o app */
 const app = next({ dev });
 const tratadorRotas = app.getRequestHandler();
 
 app.prepare().then(() => {
-  /******************************************** CONFIGURANDO SERVIDOR */
+  /********************************************
+   CONFIGURANDO SERVIDOR 
+   ********************************************/
   const servidor = express();
   const servidorEco = createServer(servidor);
 
-  /**Inicializado WebSocket */
+  /** Inicializado WebSocket */
   const io = new Server(servidorEco, {
     cors: {
-      origin: "http://localhost:3000",
+      origin: ["http://192.168.0.127:3000", "http://192.168.0.127:8081"], // Adicione todas as origens permitidas aqui
       methods: ["GET", "POST"],
     },
   });
@@ -30,12 +33,12 @@ app.prepare().then(() => {
     return tratadorRotas(req, res);
   });
 
-  /******************************************* CONEXÕES COM WEBSOCKET */
+  /*******************************************
+   CONEXÕES COM WEBSOCKET 
+   ********************************************/
   conexoesSocket(io);
 
   servidorEco.listen(3000, () => {
-    console.log(
-      "> Servidor rodando em https://localizador-eco-ffn7.vercel.app/"
-    );
+    console.log("> Servidor rodando em http://192.168.0.127:3000");
   });
 });
