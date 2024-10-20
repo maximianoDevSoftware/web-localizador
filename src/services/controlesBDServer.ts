@@ -1,8 +1,9 @@
+import dataConectEntregas from "@/database/conectandoEntregas";
 import dataConnectUsuarios from "@/database/conectUsers";
 import { usuarioTipo } from "@/types/userTypes";
 
 type dadosIniciais = {
-  usuario: string;
+  userName: string;
   senha: string;
 };
 
@@ -12,7 +13,7 @@ export default async function autenticandoUsuario(dados: dadosIniciais) {
   const modeloUsuarios = conexaoUsuarios.model("usuarios");
   /*** Fazer a busca pelo usuário no banco de dados. */
   const usuarioEncontrado = (await modeloUsuarios.findOne({
-    userName: dados.usuario,
+    userName: dados.userName,
     senha: dados.senha,
   })) as usuarioTipo;
   console.log(usuarioEncontrado.userName + " foi autenticado com Sucesso!");
@@ -45,4 +46,32 @@ export async function atualizandoUsuarios(usuarioUppdate: usuarioTipo) {
     "Status da atualização da coordenada do usuário: " +
       userEntregaBD.acknowledged
   );
+}
+
+export async function todasEntregasBancoDados() {
+  /*** Estabelecer conexão com o banco de dados de usuários. */
+  const conexaoEntregas = await dataConectEntregas();
+  const modeloEntregas = conexaoEntregas.model("entregas");
+  /*** Fazer a busca pelo usuário no banco de dados. */
+  const todasEntregas = await modeloEntregas.find({});
+  console.log("Pegando todas entregas do Banco de Dados.");
+  return todasEntregas;
+}
+
+export async function entregasDoDia() {
+  // Obter a data de hoje
+  const hoje = new Date();
+  const diaHoje = hoje.getDate();
+  const mesHoje = hoje.getMonth() + 1; // Janeiro é 0!
+  const anoHoje = hoje.getFullYear();
+  const dataHoje = [diaHoje, mesHoje, anoHoje];
+
+  const conexaoEntregas = await dataConectEntregas();
+  const modeloEntregas = conexaoEntregas.model("entregas");
+  /*** Fazer a busca pelo usuário no banco de dados. */
+  const todasEntregas = await modeloEntregas.find({
+    dia: dataHoje,
+  });
+  console.log("Pegando todas entregas do Banco de Dados.");
+  return todasEntregas;
 }

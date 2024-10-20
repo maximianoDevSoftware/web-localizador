@@ -1,5 +1,8 @@
 import { Server, Socket } from "socket.io";
-import autenticandoUsuario from "./controlesBDServer";
+import autenticandoUsuario, {
+  entregasDoDia,
+  todasEntregasBancoDados,
+} from "./controlesBDServer";
 
 export function conexoesSocket(io: Server) {
   io.on("connection", (socket: Socket) => {
@@ -18,5 +21,18 @@ export function conexoesSocket(io: Server) {
       socket.disconnect();
       console.log("Um usuário abandonou a conexão");
     });
+
+    socket.on("Buscar Entregas", async (callBack) => {
+      const minhasEntregas = await entregasDoDia();
+      callBack(minhasEntregas);
+    });
+
+    socket.on("Alterar Entrega", () => {});
+
+    socket.on("Remover Entrega", () => {});
+
+    socket.on("Localizar Entregador", () => {});
+
+    socket.on("Informar Admnistrador Localização", () => {});
   });
 }
