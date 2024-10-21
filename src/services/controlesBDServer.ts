@@ -1,6 +1,9 @@
 import dataConectEntregas from "@/database/conectandoEntregas";
 import dataConnectUsuarios from "@/database/conectUsers";
+import { entregasTipo } from "@/types/entregasTypes";
 import { usuarioTipo } from "@/types/userTypes";
+import getClientWhatsApp from "@/whatsAppServer";
+import whats from "whatsapp-web.js";
 
 type dadosIniciais = {
   userName: string;
@@ -58,14 +61,18 @@ export async function todasEntregasBancoDados() {
   return todasEntregas;
 }
 
-export async function entregasDoDia() {
+const dataDeHoje = () => {
   // Obter a data de hoje
   const hoje = new Date();
   const diaHoje = hoje.getDate();
   const mesHoje = hoje.getMonth() + 1; // Janeiro é 0!
   const anoHoje = hoje.getFullYear();
   const dataHoje = [diaHoje, mesHoje, anoHoje];
+  return dataHoje;
+};
 
+export async function entregasDoDia() {
+  const dataHoje = dataDeHoje();
   const conexaoEntregas = await dataConectEntregas();
   const modeloEntregas = conexaoEntregas.model("entregas");
   /*** Fazer a busca pelo usuário no banco de dados. */
@@ -74,4 +81,56 @@ export async function entregasDoDia() {
   });
   console.log("Pegando todas entregas do Banco de Dados.");
   return todasEntregas;
+}
+
+export async function atualziandoEntregas(entregaUpdate: entregasTipo) {
+  console.log(entregaUpdate);
+  const dataHoje = dataDeHoje();
+  const connEntrega = await dataConectEntregas();
+  const modelEntrega = connEntrega.model("entregas");
+  const entregaGerada = new modelEntrega(entregaUpdate);
+  const userEntregaBD = await modelEntrega.updateOne(
+    { id: entregaUpdate.id }, // Encontra o documento pelo ID
+    {
+      $set: entregaUpdate,
+    }
+  );
+  if (userEntregaBD.matchedCount === 0) {
+    console.log("Nenhum documento encontrado com esse ID.");
+  } else if (userEntregaBD.modifiedCount === 0) {
+    console.log("Nenhuma modificação foi feita.");
+  } else {
+    console.log("Documento atualizado com sucesso.");
+  }
+  const minhasEntregas = await modelEntrega.find({
+    dia: dataHoje,
+  });
+
+  return minhasEntregas;
+}
+
+export async function enviandoMensagem(dadosMensagem: {
+  contato: string;
+  mensagem: string;
+}) {
+  const client = await getClientWhatsApp();
+  const contactAdapt = dadosMensagem.contato + "@c.us";
+  await client.sendMessage(contactAdapt, dadosMensagem.mensagem);
+}
+
+export async function localzacaoEntrega(
+  entrega: entregasTipo,
+  dadosMensagem: {
+    contato: string;
+    mensagem: string;
+  }
+) {
+  // let endereco = `${entrega.cidade}, ${entrega.bairro}, ${entrega.rua}, ${entrega.numero}`;
+  // const coordenadasEntrega = await end4Coords(endereco);
+  console.log(dadosMensagem);
+  const loc = new whats.Location(37.422, -122.084);
+  const client = await getClientWhatsApp();
+
+  const contactAdapt = dadosMensagem.contato + "@c.us";
+  client.sendMessage(contactAdapt, loc);
 }

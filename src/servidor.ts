@@ -4,6 +4,7 @@ import next from "next";
 import { createServer } from "http";
 import { Server } from "socket.io"; // Importando o Server do socket.io
 import { conexoesSocket } from "./services/connectSocketServer";
+import getClientWhatsApp from "./whatsAppServer";
 
 const dev = process.env.NODE_ENV !== "production";
 
@@ -11,7 +12,9 @@ const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const tratadorRotas = app.getRequestHandler();
 
-app.prepare().then(() => {
+export const whatsClient = getClientWhatsApp();
+
+app.prepare().then(async () => {
   /********************************************
    CONFIGURANDO SERVIDOR 
    ********************************************/
@@ -21,7 +24,12 @@ app.prepare().then(() => {
   /** Inicializado WebSocket */
   const io = new Server(servidorEco, {
     cors: {
-      origin: ["http://192.168.3.132:3000", "http://192.168.3.132:8081"], // Adicione todas as origens permitidas aqui
+      origin: [
+        "http://192.168.3.132:3000",
+        "http://192.168.3.132:8081",
+        "http://192.168.3.102:3000",
+        "http://192.168.3.102:8081",
+      ], // Adicione todas as origens permitidas aqui
       methods: ["GET", "POST"],
     },
   });
@@ -39,6 +47,6 @@ app.prepare().then(() => {
   conexoesSocket(io);
 
   servidorEco.listen(3000, () => {
-    console.log("> Servidor rodando em http://192.168.3.132:3000");
+    console.log("> Servidor rodando em http://192.168.3.102:3000");
   });
 });

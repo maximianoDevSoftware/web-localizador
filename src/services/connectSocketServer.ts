@@ -1,7 +1,9 @@
 import { Server, Socket } from "socket.io";
 import autenticandoUsuario, {
+  atualziandoEntregas,
   entregasDoDia,
-  todasEntregasBancoDados,
+  enviandoMensagem,
+  localzacaoEntrega,
 } from "./controlesBDServer";
 
 export function conexoesSocket(io: Server) {
@@ -27,9 +29,18 @@ export function conexoesSocket(io: Server) {
       callBack(minhasEntregas);
     });
 
-    socket.on("Alterar Entrega", () => {});
+    socket.on("Atualizar Entrega", async (entregaUpdate) => {
+      const todasEntregas = await atualziandoEntregas(entregaUpdate);
+      socket.emit("Entregas Atualizadas", todasEntregas);
+    });
 
-    socket.on("Remover Entrega", () => {});
+    socket.on("Mensagem Chegada Cliente", (dadosMensagem) => {
+      enviandoMensagem(dadosMensagem);
+    });
+
+    socket.on("Localizacao Entrega", (dadosObj) => {
+      localzacaoEntrega(dadosObj.entrega, dadosObj.dadosMensagem);
+    });
 
     socket.on("Localizar Entregador", () => {});
 
