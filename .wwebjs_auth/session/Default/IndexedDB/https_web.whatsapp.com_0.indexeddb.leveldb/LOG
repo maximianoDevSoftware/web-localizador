@@ -1,14 +1,4 @@
-2024/10/21-01:35:29.865 5388 Reusing MANIFEST C:\Users\renat\OneDrive\Área de Trabalho\Projeto Base\web-localizador\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2024/10/21-01:35:29.866 5388 Recovering log #188
-2024/10/21-01:35:29.894 5388 Reusing old log C:\Users\renat\OneDrive\Área de Trabalho\Projeto Base\web-localizador\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000188.log 
-2024/10/21-01:35:29.894 5388 Delete type=2 #186
-2024/10/21-01:35:40.816 3818 Level-0 table #193: started
-2024/10/21-01:35:40.828 3818 Level-0 table #193: 115509 bytes OK
-2024/10/21-01:35:40.830 3818 Delete type=0 #188
-2024/10/21-01:35:40.831 3818 Manual compaction at level-0 from '\x00P\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00Q\x00\x00\x00' @ 0 : 0; will stop at '\x00P\x00\x00\x05' @ 134261 : 1
-2024/10/21-01:35:40.831 3818 Compacting 1@0 + 1@1 files
-2024/10/21-01:35:40.966 3818 Generated table #194@0: 55915 keys, 1070599 bytes
-2024/10/21-01:35:40.966 3818 Compacted 1@0 + 1@1 files => 1070599 bytes
-2024/10/21-01:35:40.967 3818 compacted to: files[ 0 1 1 0 0 0 0 ]
-2024/10/21-01:35:40.967 3818 Delete type=2 #193
-2024/10/21-01:35:40.968 3818 Manual compaction at level-0 from '\x00P\x00\x00\x05' @ 134261 : 1 .. '\x00Q\x00\x00\x00' @ 0 : 0; will stop at (end)
+2024/10/22-23:22:01.054 4a8 Reusing MANIFEST C:\Users\Eco Clean\Desktop\Aplicativo Web Logins\web-localizador\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2024/10/22-23:22:01.054 4a8 Recovering log #320
+2024/10/22-23:22:01.072 4a8 Reusing old log C:\Users\Eco Clean\Desktop\Aplicativo Web Logins\web-localizador\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000320.log 
+2024/10/22-23:22:14.061 118 Manual compaction at level-0 from '\x00|\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00}\x00\x00\x00' @ 0 : 0; will stop at (end)

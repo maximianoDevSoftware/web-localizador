@@ -24,12 +24,7 @@ app.prepare().then(async () => {
   /** Inicializado WebSocket */
   const io = new Server(servidorEco, {
     cors: {
-      origin: [
-        "http://192.168.3.132:3000",
-        "http://192.168.3.132:8081",
-        "http://192.168.3.102:3000",
-        "http://192.168.3.102:8081",
-      ], // Adicione todas as origens permitidas aqui
+      origin: "*", // Adicione todas as origens permitidas aqui
       methods: ["GET", "POST"],
     },
   });
@@ -47,6 +42,6 @@ app.prepare().then(async () => {
   conexoesSocket(io);
 
   servidorEco.listen(3000, () => {
-    console.log("> Servidor rodando em http://192.168.3.102:3000");
+    console.log("> Servidor rodando em http://192.168.3.132:3000");
   });
 });

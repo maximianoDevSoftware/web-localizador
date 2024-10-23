@@ -1,2 +1,3 @@
-2024/10/20-23:43:53.466 4ea8 Creating DB C:\Users\renat\OneDrive\Área de Trabalho\Projeto Base\web-localizador\.wwebjs_auth\session\Default\shared_proto_db\metadata since it was missing.
-2024/10/20-23:43:53.488 4ea8 Reusing MANIFEST C:\Users\renat\OneDrive\Área de Trabalho\Projeto Base\web-localizador\.wwebjs_auth\session\Default\shared_proto_db\metadata/MANIFEST-000001
+2024/10/22-09:40:09.118 2d20 Reusing MANIFEST C:\Users\Eco Clean\Desktop\Aplicativo Web Logins\web-localizador\.wwebjs_auth\session\Default\shared_proto_db\metadata/MANIFEST-000001
+2024/10/22-09:40:09.125 2d20 Recovering log #3
+2024/10/22-09:40:09.126 2d20 Reusing old log C:\Users\Eco Clean\Desktop\Aplicativo Web Logins\web-localizador\.wwebjs_auth\session\Default\shared_proto_db\metadata/000003.log 

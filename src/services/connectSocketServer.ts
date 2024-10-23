@@ -1,10 +1,19 @@
 import { Server, Socket } from "socket.io";
 import autenticandoUsuario, {
+  atualizandoCliente,
   atualziandoEntregas,
+  criandoCliente,
+  criandoEntrega,
+  deletandoCliente,
+  deletandoEntrega,
   entregasDoDia,
   enviandoMensagem,
   localzacaoEntrega,
+  todasEntregasRelatorio,
+  todosClientes,
+  todosUsuariosBanco,
 } from "./controlesBDServer";
+import { usuarioTipo } from "@/types/userTypes";
 
 export function conexoesSocket(io: Server) {
   io.on("connection", (socket: Socket) => {
@@ -29,8 +38,23 @@ export function conexoesSocket(io: Server) {
       callBack(minhasEntregas);
     });
 
+    socket.on("Buscar Clientes", async (callBack) => {
+      const meusClientes = await todosClientes();
+      callBack(meusClientes);
+    });
+
+    socket.on("Buscar Entregas Relatorio", async (retorno) => {
+      const todasEntregasRel = await todasEntregasRelatorio();
+      retorno(todasEntregasRel);
+    });
+
     socket.on("Atualizar Entrega", async (entregaUpdate) => {
       const todasEntregas = await atualziandoEntregas(entregaUpdate);
+      socket.emit("Entregas Atualizadas", todasEntregas);
+    });
+
+    socket.on("Deletar Entrega", async (entregaDelete) => {
+      const todasEntregas = await deletandoEntrega(entregaDelete);
       socket.emit("Entregas Atualizadas", todasEntregas);
     });
 
@@ -42,7 +66,35 @@ export function conexoesSocket(io: Server) {
       localzacaoEntrega(dadosObj.entrega, dadosObj.dadosMensagem);
     });
 
-    socket.on("Localizar Entregador", () => {});
+    socket.on("Criar Entrega", async (entregaGerada) => {
+      const todasEntregas = await criandoEntrega(entregaGerada);
+      socket.emit("Entregas Atualizadas", todasEntregas);
+    });
+
+    socket.on("Criar Cliente", async (clienteGerado) => {
+      await criandoCliente(clienteGerado);
+    });
+
+    socket.on("Alterar Cliente", async (clienteUpdate) => {
+      await atualizandoCliente(clienteUpdate);
+    });
+
+    socket.on("Deletar Cliente", async (clienteDelete) => {
+      await deletandoCliente(clienteDelete);
+    });
+
+    socket.on("Localizar Entregador", (usuario) => {
+      console.log("Usuário conectando localização pelo socket");
+      const usuarioAtualizado = usuario;
+      console.log("Emitindo localizando-motoristas com: ", usuarioAtualizado);
+      socket.emit("localizando-motoristas", usuarioAtualizado);
+    });
+
+    socket.on("solicitar-usuarios", async () => {
+      todosUsuariosBanco().then((dados) => {
+        socket.emit("todos-usuarios", dados);
+      });
+    });
 
     socket.on("Informar Admnistrador Localização", () => {});
   });
