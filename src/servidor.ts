@@ -27,6 +27,8 @@ app.prepare().then(async () => {
       origin: "*", // Adicione todas as origens permitidas aqui
       methods: ["GET", "POST"],
     },
+
+    transports: ["polling", "websocket"],
   });
 
   servidor.use(express.json());
