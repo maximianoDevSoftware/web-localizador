@@ -2,8 +2,8 @@
 
 import { useContext, useState } from "react";
 import estilo from "../telaRel.module.css";
-import { contextAutenticacao } from "../../contexts/contextoUsuario";
 import { entregasTipo } from "@/types/entregasTypes";
+import { contextAutenticacao } from "@/contexts/contextoUsuario";
 
 export function MotoristasRelatorio() {
   const { usuarioLogado, marcosUser, ueneUser, leoUser, joaoUser } =
