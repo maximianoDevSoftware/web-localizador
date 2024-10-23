@@ -4,15 +4,15 @@
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
-    "noEmit": false, // Mude de true para false
+    "noEmit": false,
     "esModuleInterop": true,
-    "module": "commonjs", // Use commonjs para compatibilidade com Node
-    "moduleResolution": "node", // Use 'node' para compatibilidade com Node.js
+    "module": "esnext", // Deixe como esnext
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "outDir": "./dist", // Diretório de saída para arquivos compilados
+    "outDir": "./dist",
     "plugins": [
       {
         "name": "next"

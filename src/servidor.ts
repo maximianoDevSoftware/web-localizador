@@ -1,3 +1,6 @@
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+
 import express from "express";
 import cors from "cors"; // Importando o pacote cors
 import next from "next";
@@ -13,7 +16,7 @@ const tratadorRotas = app.getRequestHandler();
 
 app.prepare().then(async () => {
   /********************************************
-   CONFIGURANDO SERVIDOR 
+   CONFIGURANDO SERVIDOR    
    ********************************************/
   const servidor = express();
   const servidorEco = createServer(servidor);
@@ -24,19 +27,17 @@ app.prepare().then(async () => {
       origin: "*", // Adicione todas as origens permitidas aqui
       methods: ["GET", "POST"],
     },
-
     transports: ["polling", "websocket"],
   });
 
   servidor.use(express.json());
   servidor.use(cors()); // Adicionando o middleware cors
-
   servidor.all("*", (req, res) => {
     return tratadorRotas(req, res);
   });
 
   /*******************************************
-   CONEXÕES COM WEBSOCKET 
+   CONEXÕES COM WEBSOCKET    
    ********************************************/
   conexoesSocket(io);
 
