@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "tsx src/servidor.ts",
-    "build": "next build && tsc",
-    "start": "node dist/servidor.js",
+    "build": "tsc && next build",
+    "start": "node dist/src/servidor.js",
     "lint": "next lint",
     "static": "next build && next export"
   },
