@@ -1,13 +1,13 @@
-2024/10/22-22:39:35.179 29e8 Reusing MANIFEST C:\Users\Eco Clean\Desktop\Aplicativo Web Logins\web-localizador\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2024/10/22-22:39:35.184 29e8 Recovering log #316
-2024/10/22-22:39:35.332 29e8 Reusing old log C:\Users\Eco Clean\Desktop\Aplicativo Web Logins\web-localizador\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000316.log 
-2024/10/22-22:39:48.642 29e8 Level-0 table #321: started
-2024/10/22-22:39:48.659 29e8 Level-0 table #321: 1014841 bytes OK
-2024/10/22-22:39:48.660 29e8 Delete type=0 #316
-2024/10/22-22:39:48.661 29e8 Manual compaction at level-0 from '\x00{\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00|\x00\x00\x00' @ 0 : 0; will stop at (end)
-2024/10/22-22:39:49.818 3048 Compacting 1@1 + 1@2 files
-2024/10/22-22:39:49.886 3048 Generated table #322@1: 48767 keys, 1483673 bytes
-2024/10/22-22:39:49.886 3048 Compacted 1@1 + 1@2 files => 1483673 bytes
-2024/10/22-22:39:49.886 3048 compacted to: files[ 0 0 1 0 0 0 0 ]
-2024/10/22-22:39:49.887 3048 Delete type=2 #318
-2024/10/22-22:39:49.887 3048 Delete type=2 #321
+2024/10/23-11:20:18.990 2290 Reusing MANIFEST C:\Users\Eco Clean\Desktop\Aplicativo Web Logins\web-localizador\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2024/10/23-11:20:18.990 2290 Recovering log #320
+2024/10/23-11:20:19.227 2290 Reusing old log C:\Users\Eco Clean\Desktop\Aplicativo Web Logins\web-localizador\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000320.log 
+2024/10/23-11:20:32.235 398c Level-0 table #325: started
+2024/10/23-11:20:32.256 398c Level-0 table #325: 840769 bytes OK
+2024/10/23-11:20:32.257 398c Delete type=0 #320
+2024/10/23-11:20:32.258 398c Manual compaction at level-0 from '\x00}\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00~\x00\x00\x00' @ 0 : 0; will stop at (end)
+2024/10/23-11:20:33.597 2290 Compacting 1@1 + 1@2 files
+2024/10/23-11:20:33.679 2290 Generated table #326@1: 50501 keys, 1521592 bytes
+2024/10/23-11:20:33.679 2290 Compacted 1@1 + 1@2 files => 1521592 bytes
+2024/10/23-11:20:33.679 2290 compacted to: files[ 0 0 1 0 0 0 0 ]
+2024/10/23-11:20:33.680 2290 Delete type=2 #322
+2024/10/23-11:20:33.680 2290 Delete type=2 #325

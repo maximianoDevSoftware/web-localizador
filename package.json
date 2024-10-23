@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "tsx src/servidor.ts",
-    "build": "next build",
-    "start": "tsx src/servidor.ts",
+    "build": "next build && tsc",
+    "start": "node dist/servidor.js",
     "lint": "next lint",
     "static": "next build && next export"
   },
@@ -25,7 +25,8 @@
     "react-icons": "^5.3.0",
     "socket.io": "^4.8.0",
     "socket.io-client": "^4.8.0",
-    "whatsapp-web.js": "^1.26.0"
+    "whatsapp-web.js": "^1.26.0",
+    "tsx": "^4.19.1"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
@@ -37,7 +38,6 @@
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "ts-node": "^10.9.2",
-    "tsx": "^4.19.1",
     "typescript": "^5.6.3"
   }
 }
