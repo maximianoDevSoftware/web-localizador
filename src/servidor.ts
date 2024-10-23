@@ -4,15 +4,12 @@ import next from "next";
 import { createServer } from "http";
 import { Server } from "socket.io"; // Importando o Server do socket.io
 import { conexoesSocket } from "./services/connectSocketServer";
-import getClientWhatsApp from "./whatsAppServer";
 
 const dev = process.env.NODE_ENV !== "production";
 
 /** Inicializando o app */
 const app = next({ dev });
 const tratadorRotas = app.getRequestHandler();
-
-export const whatsClient = getClientWhatsApp();
 
 app.prepare().then(async () => {
   /********************************************

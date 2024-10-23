@@ -7,8 +7,6 @@ import autenticandoUsuario, {
   deletandoCliente,
   deletandoEntrega,
   entregasDoDia,
-  enviandoMensagem,
-  localzacaoEntrega,
   todasEntregasRelatorio,
   todosClientes,
   todosUsuariosBanco,
@@ -58,13 +56,13 @@ export function conexoesSocket(io: Server) {
       socket.emit("Entregas Atualizadas", todasEntregas);
     });
 
-    socket.on("Mensagem Chegada Cliente", (dadosMensagem) => {
-      enviandoMensagem(dadosMensagem);
-    });
+    // socket.on("Mensagem Chegada Cliente", (dadosMensagem) => {
+    //   enviandoMensagem(dadosMensagem);
+    // });
 
-    socket.on("Localizacao Entrega", (dadosObj) => {
-      localzacaoEntrega(dadosObj.entrega, dadosObj.dadosMensagem);
-    });
+    // socket.on("Localizacao Entrega", (dadosObj) => {
+    //   localzacaoEntrega(dadosObj.entrega, dadosObj.dadosMensagem);
+    // });
 
     socket.on("Criar Entrega", async (entregaGerada) => {
       const todasEntregas = await criandoEntrega(entregaGerada);

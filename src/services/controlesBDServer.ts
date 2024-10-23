@@ -4,8 +4,6 @@ import dataConnectUsuarios from "@/database/conectUsers";
 import { clientesTipo } from "@/types/clientesType";
 import { entregasTipo } from "@/types/entregasTypes";
 import { usuarioTipo } from "@/types/userTypes";
-import getClientWhatsApp from "@/whatsAppServer";
-import whats from "whatsapp-web.js";
 
 type dadosIniciais = {
   userName: string;
@@ -128,32 +126,6 @@ export async function deletandoEntrega(entregaDelete: entregasTipo) {
   });
 
   return minhasEntregas;
-}
-
-export async function enviandoMensagem(dadosMensagem: {
-  contato: string;
-  mensagem: string;
-}) {
-  const client = await getClientWhatsApp();
-  const contactAdapt = dadosMensagem.contato + "@c.us";
-  await client.sendMessage(contactAdapt, dadosMensagem.mensagem);
-}
-
-export async function localzacaoEntrega(
-  entrega: entregasTipo,
-  dadosMensagem: {
-    contato: string;
-    mensagem: string;
-  }
-) {
-  // let endereco = `${entrega.cidade}, ${entrega.bairro}, ${entrega.rua}, ${entrega.numero}`;
-  // const coordenadasEntrega = await end4Coords(endereco);
-  console.log(dadosMensagem);
-  const loc = new whats.Location(37.422, -122.084);
-  const client = await getClientWhatsApp();
-
-  const contactAdapt = dadosMensagem.contato + "@c.us";
-  client.sendMessage(contactAdapt, loc);
 }
 
 /***ADAPTANDO CLIENTE E ENTREGAS CONTEXT */
