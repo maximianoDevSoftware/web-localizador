@@ -1,29 +1,22 @@
-"use strict";
 "use client";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ContextEntregasClientes = void 0;
-exports.EntregasClientesProvedor = EntregasClientesProvedor;
-var react_1 = require("react");
-var contextoUsuario_1 = require("./contextoUsuario");
-var socketCliente_1 = __importDefault(require("@/socket/socketCliente"));
-exports.ContextEntregasClientes = (0, react_1.createContext)({});
-function EntregasClientesProvedor(_a) {
+import { createContext, useContext, useEffect, useState } from "react";
+import { contextAutenticacao } from "./contextoUsuario";
+import getSocket from "@/socket/socketCliente";
+export var ContextEntregasClientes = createContext({});
+export function EntregasClientesProvedor(_a) {
     var children = _a.children;
     /**Defininindo os states que poderão ser posteriormente acessados */
-    var usuarioLogado = (0, react_1.useContext)(contextoUsuario_1.contextAutenticacao).usuarioLogado;
-    var _b = (0, react_1.useState)(), entregasDia = _b[0], setEntregasDia = _b[1];
-    var _c = (0, react_1.useState)(), entregasAndamento = _c[0], setEntregasAndamento = _c[1];
-    var _d = (0, react_1.useState)(), entregasConcluidas = _d[0], setEntregasConcluidas = _d[1];
-    var _e = (0, react_1.useState)(), todosClientes = _e[0], setTodosClientes = _e[1];
-    var _f = (0, react_1.useState)(), entregasRelatorio = _f[0], setEntregasRelatorio = _f[1];
-    var _g = (0, react_1.useState)(), rotaEntregasMarcos = _g[0], setRotaEntregaMarcos = _g[1];
-    var _h = (0, react_1.useState)(), rotaEntregasUene = _h[0], setRotaEntregaUene = _h[1];
-    var _j = (0, react_1.useState)(), rotaEntregasLeo = _j[0], setRotaEntregaLeo = _j[1];
-    var _k = (0, react_1.useState)(), rotaEntregasJoao = _k[0], setRotaEntregaJoao = _k[1];
-    var socket = (0, socketCliente_1.default)();
+    var usuarioLogado = useContext(contextAutenticacao).usuarioLogado;
+    var _b = useState(), entregasDia = _b[0], setEntregasDia = _b[1];
+    var _c = useState(), entregasAndamento = _c[0], setEntregasAndamento = _c[1];
+    var _d = useState(), entregasConcluidas = _d[0], setEntregasConcluidas = _d[1];
+    var _e = useState(), todosClientes = _e[0], setTodosClientes = _e[1];
+    var _f = useState(), entregasRelatorio = _f[0], setEntregasRelatorio = _f[1];
+    var _g = useState(), rotaEntregasMarcos = _g[0], setRotaEntregaMarcos = _g[1];
+    var _h = useState(), rotaEntregasUene = _h[0], setRotaEntregaUene = _h[1];
+    var _j = useState(), rotaEntregasLeo = _j[0], setRotaEntregaLeo = _j[1];
+    var _k = useState(), rotaEntregasJoao = _k[0], setRotaEntregaJoao = _k[1];
+    var socket = getSocket();
     var atualizandoEntregas = function () {
         socket.emit("Buscar Entregas", function (response) {
             if (response) {
@@ -74,7 +67,7 @@ function EntregasClientesProvedor(_a) {
             setEntregasRelatorio(response);
         });
     };
-    (0, react_1.useEffect)(function () {
+    useEffect(function () {
         socket.on("Entregas Atualizadas", function (entregasDoDia) {
             atualizandoEntregasEffect(entregasDoDia);
         });
@@ -82,7 +75,7 @@ function EntregasClientesProvedor(_a) {
             socket.off("Entregas Atualizadas");
         };
     }, []);
-    return (<exports.ContextEntregasClientes.Provider value={{
+    return (<ContextEntregasClientes.Provider value={{
             entregasDia: entregasDia,
             entregasRelatorio: entregasRelatorio,
             entregasAndamento: entregasAndamento,
@@ -98,5 +91,5 @@ function EntregasClientesProvedor(_a) {
             rotaEntregasJoao: rotaEntregasJoao,
         }}>
       {children}
-    </exports.ContextEntregasClientes.Provider>);
+    </ContextEntregasClientes.Provider>);
 }

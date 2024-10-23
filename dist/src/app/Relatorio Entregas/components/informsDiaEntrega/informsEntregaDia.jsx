@@ -1,16 +1,10 @@
-"use strict";
 "use client";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ComponenteRelatDia = ComponenteRelatDia;
-var tb_1 = require("react-icons/tb");
-var diaInfo_module_css_1 = __importDefault(require("./diaInfo.module.css"));
-var react_1 = require("react");
-var entregasClientesContext_1 = require("@/contexts/entregasClientesContext");
-function ComponenteRelatDia() {
-    var entregasRelatorio = (0, react_1.useContext)(entregasClientesContext_1.ContextEntregasClientes).entregasRelatorio;
+import { TbTruckDelivery } from "react-icons/tb";
+import estilo from "./diaInfo.module.css";
+import { useContext, useEffect } from "react";
+import { ContextEntregasClientes } from "@/contexts/entregasClientesContext";
+export function ComponenteRelatDia() {
+    var entregasRelatorio = useContext(ContextEntregasClientes).entregasRelatorio;
     var entregasDisponiveis = entregasRelatorio === null || entregasRelatorio === void 0 ? void 0 : entregasRelatorio.filter(function (entrega) {
         if (entrega.status === "Disponível") {
             return entrega;
@@ -49,40 +43,40 @@ function ComponenteRelatDia() {
             return "R$ 0,00";
         }
     };
-    (0, react_1.useEffect)(function () {
+    useEffect(function () {
         console.log("Número de entregas dispnníveis: " + (entregasDisponiveis === null || entregasDisponiveis === void 0 ? void 0 : entregasDisponiveis.length));
         console.log("Número de entregas andamento: " + (entregasAndamento === null || entregasAndamento === void 0 ? void 0 : entregasAndamento.length));
         console.log("Número de entregas concluidas: " + (entregasConcluidas === null || entregasConcluidas === void 0 ? void 0 : entregasConcluidas.length));
     }, [entregasRelatorio]);
-    return (<div className={"".concat(diaInfo_module_css_1.default.areaInfoEntregaDia)}>
-      <div className={"".concat(diaInfo_module_css_1.default.dispInfoDia)}>
-        <div className={"".concat(diaInfo_module_css_1.default.areaFotoEntregaDia)}>
-          <div className={"".concat(diaInfo_module_css_1.default.fotoEntregasDia, " ").concat(diaInfo_module_css_1.default.fotoMarcosEntregasDia)}></div>
-          <div className={"".concat(diaInfo_module_css_1.default.motoraEntregasDia)}>
-            1 <tb_1.TbTruckDelivery className="inline size-5"/>
+    return (<div className={"".concat(estilo.areaInfoEntregaDia)}>
+      <div className={"".concat(estilo.dispInfoDia)}>
+        <div className={"".concat(estilo.areaFotoEntregaDia)}>
+          <div className={"".concat(estilo.fotoEntregasDia, " ").concat(estilo.fotoMarcosEntregasDia)}></div>
+          <div className={"".concat(estilo.motoraEntregasDia)}>
+            1 <TbTruckDelivery className="inline size-5"/>
           </div>
         </div>
-        <div className={"".concat(diaInfo_module_css_1.default.areaFotoEntregaDia)}>
-          <div className={"".concat(diaInfo_module_css_1.default.fotoEntregasDia, " ").concat(diaInfo_module_css_1.default.fotoUeneEntregasDia)}></div>
-          <div className={"".concat(diaInfo_module_css_1.default.motoraEntregasDia)}>
-            3 <tb_1.TbTruckDelivery className="inline size-5"/>
+        <div className={"".concat(estilo.areaFotoEntregaDia)}>
+          <div className={"".concat(estilo.fotoEntregasDia, " ").concat(estilo.fotoUeneEntregasDia)}></div>
+          <div className={"".concat(estilo.motoraEntregasDia)}>
+            3 <TbTruckDelivery className="inline size-5"/>
           </div>
         </div>
-        <div className={"".concat(diaInfo_module_css_1.default.areaFotoEntregaDia)}>
-          <div className={"".concat(diaInfo_module_css_1.default.fotoEntregasDia, " ").concat(diaInfo_module_css_1.default.fotoLeoEntregasDia)}></div>
-          <div className={"".concat(diaInfo_module_css_1.default.motoraEntregasDia)}>
-            4 <tb_1.TbTruckDelivery className="inline size-5"/>
+        <div className={"".concat(estilo.areaFotoEntregaDia)}>
+          <div className={"".concat(estilo.fotoEntregasDia, " ").concat(estilo.fotoLeoEntregasDia)}></div>
+          <div className={"".concat(estilo.motoraEntregasDia)}>
+            4 <TbTruckDelivery className="inline size-5"/>
           </div>
         </div>
-        <div className={"".concat(diaInfo_module_css_1.default.areaFotoEntregaDia)}>
-          <div className={"".concat(diaInfo_module_css_1.default.fotoEntregasDia, " ").concat(diaInfo_module_css_1.default.fotoJoaoEntregasDia)}></div>
-          <div className={"".concat(diaInfo_module_css_1.default.motoraEntregasDia)}>
-            5 <tb_1.TbTruckDelivery className="inline size-5"/>
+        <div className={"".concat(estilo.areaFotoEntregaDia)}>
+          <div className={"".concat(estilo.fotoEntregasDia, " ").concat(estilo.fotoJoaoEntregasDia)}></div>
+          <div className={"".concat(estilo.motoraEntregasDia)}>
+            5 <TbTruckDelivery className="inline size-5"/>
           </div>
         </div>
       </div>
 
-      <div className={"".concat(diaInfo_module_css_1.default.dispInfoDia)}>
+      <div className={"".concat(estilo.dispInfoDia)}>
         <h3>
           Entregas Disponíveis:{" "}
           <span>{entregasDisponiveis ? entregasDisponiveis.length : "0"}</span>
@@ -97,9 +91,9 @@ function ComponenteRelatDia() {
         </h3>
       </div>
 
-      <div className={"".concat(diaInfo_module_css_1.default.dispInfoDia)}>
+      <div className={"".concat(estilo.dispInfoDia)}>
         <h3>Faturamento do dia:</h3>
-        <div className={"".concat(diaInfo_module_css_1.default.spamFaturamento)}>{FaturamentoDoDia()}</div>
+        <div className={"".concat(estilo.spamFaturamento)}>{FaturamentoDoDia()}</div>
       </div>
     </div>);
 }

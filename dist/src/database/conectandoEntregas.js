@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,13 +34,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.fechandoBanco = void 0;
-var entregaModels_1 = require("@/modules/entregaModels");
-var mongoose_1 = __importDefault(require("mongoose"));
+import { entregaSchema } from "@/modules/entregaModels";
+import mongoose from "mongoose";
 // Create the model instance outside the function
 var dataConectEntregas = function () { return __awaiter(void 0, void 0, void 0, function () {
     var uri, clientOptions, conn;
@@ -52,10 +46,10 @@ var dataConectEntregas = function () { return __awaiter(void 0, void 0, void 0, 
                 clientOptions = {
                     serverApi: { version: "1", strict: true, deprecationErrors: true },
                 };
-                return [4 /*yield*/, mongoose_1.default.createConnection(uri, clientOptions).asPromise()];
+                return [4 /*yield*/, mongoose.createConnection(uri, clientOptions).asPromise()];
             case 1:
                 conn = _a.sent();
-                return [4 /*yield*/, conn.model("entregas", entregaModels_1.entregaSchema, "entregaschemas")];
+                return [4 /*yield*/, conn.model("entregas", entregaSchema, "entregaschemas")];
             case 2:
                 _a.sent();
                 console.log("Conectado ao Banco de Dados: Entregas.");
@@ -63,15 +57,14 @@ var dataConectEntregas = function () { return __awaiter(void 0, void 0, void 0, 
         }
     });
 }); };
-var fechandoBanco = function () { return __awaiter(void 0, void 0, void 0, function () {
+export var fechandoBanco = function () { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, mongoose_1.default.disconnect()];
+            case 0: return [4 /*yield*/, mongoose.disconnect()];
             case 1:
                 _a.sent();
                 return [2 /*return*/];
         }
     });
 }); };
-exports.fechandoBanco = fechandoBanco;
-exports.default = dataConectEntregas;
+export default dataConectEntregas;

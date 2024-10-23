@@ -1,4 +1,3 @@
-"use strict";
 "use client";
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
@@ -47,29 +46,24 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = NovoClienteEntregas;
-var telasFull_module_css_1 = __importDefault(require("@/styles/telasFull.module.css"));
-var fadesSty_module_css_1 = __importDefault(require("@/styles/fades/fadesSty.module.css"));
-var telasFull_module_css_2 = __importDefault(require("@/styles/telasFull.module.css"));
-var fa_1 = require("react-icons/fa");
-var io5_1 = require("react-icons/io5");
-var react_1 = require("react");
-var tb_1 = require("react-icons/tb");
-var fa6_1 = require("react-icons/fa6");
-var enderecoCoords_1 = require("@/utils/enderecoCoords");
-var entregasClientesContext_1 = require("@/contexts/entregasClientesContext");
-var contextoUsuario_1 = require("@/contexts/contextoUsuario");
-var socketCliente_1 = __importDefault(require("@/socket/socketCliente"));
-function NovoClienteEntregas() {
+import estilo from "@/styles/telasFull.module.css";
+import estiloFade from "@/styles/fades/fadesSty.module.css";
+import estiloFullCliente from "@/styles/telasFull.module.css";
+import { FaRegWindowClose } from "react-icons/fa";
+import { IoPersonAdd } from "react-icons/io5";
+import { useContext, useEffect, useRef, useState } from "react";
+import { TbTruckDelivery } from "react-icons/tb";
+import { FaUsersViewfinder } from "react-icons/fa6";
+import { end4Coords, gerandoDia } from "@/utils/enderecoCoords";
+import { ContextEntregasClientes } from "@/contexts/entregasClientesContext";
+import { contextAutenticacao } from "@/contexts/contextoUsuario";
+import getSocket from "@/socket/socketCliente";
+export default function NovoClienteEntregas() {
     var _this = this;
-    var _a = (0, react_1.useContext)(entregasClientesContext_1.ContextEntregasClientes), atualizandoClientes = _a.atualizandoClientes, atualizandoEntregas = _a.atualizandoEntregas;
-    var usuarioLogado = (0, react_1.useContext)(contextoUsuario_1.contextAutenticacao).usuarioLogado;
-    var telaFullClient = (0, react_1.useRef)(null);
-    var _b = (0, react_1.useState)({
+    var _a = useContext(ContextEntregasClientes), atualizandoClientes = _a.atualizandoClientes, atualizandoEntregas = _a.atualizandoEntregas;
+    var usuarioLogado = useContext(contextAutenticacao).usuarioLogado;
+    var telaFullClient = useRef(null);
+    var _b = useState({
         nome: "",
         cidade: "",
         telefone: "",
@@ -81,7 +75,7 @@ function NovoClienteEntregas() {
         entregador: "Marcos",
         volume: "Carro",
     }), formData = _b[0], setFormData = _b[1];
-    var socket = (0, socketCliente_1.default)();
+    var socket = getSocket();
     var modificandoInputs = function (event) {
         var _a;
         setFormData(__assign(__assign({}, formData), (_a = {}, _a[event.target.name] = event.target.value, _a)));
@@ -94,10 +88,10 @@ function NovoClienteEntregas() {
                     ev.preventDefault();
                     console.log("iniciando processo de gerar entrega...");
                     endereco = "".concat(formData.cidade, ", ").concat(formData.bairro, ", ").concat(formData.rua, ", ").concat(formData.numero);
-                    return [4 /*yield*/, (0, enderecoCoords_1.end4Coords)(endereco)];
+                    return [4 /*yield*/, end4Coords(endereco)];
                 case 1:
                     coordenadas = _a.sent();
-                    diaAtual = (0, enderecoCoords_1.gerandoDia)();
+                    diaAtual = gerandoDia();
                     entregaNova = {
                         dia: diaAtual,
                         nome: formData.nome,
@@ -129,7 +123,7 @@ function NovoClienteEntregas() {
                 case 0:
                     console.log("iniciando processo de adicionar cliente...");
                     endereco = "".concat(formData.cidade, ", ").concat(formData.bairro, ", ").concat(formData.rua, ", ").concat(formData.numero);
-                    return [4 /*yield*/, (0, enderecoCoords_1.end4Coords)(endereco)];
+                    return [4 /*yield*/, end4Coords(endereco)];
                 case 1:
                     coordenadas = _a.sent();
                     clienteNovo = {
@@ -157,12 +151,12 @@ function NovoClienteEntregas() {
             var infsEntrega = fundoFosco_1.children[0].children[0].children[1];
             var sideBar = fundoFosco_1.children[0].children[1];
             /**O formulario inicialmente recebera a classe "esfumaçandoParaCima" */
-            infsCliente.classList.toggle(fadesSty_module_css_1.default.saiEsquerda);
-            infsEntrega.classList.toggle(fadesSty_module_css_1.default.saiCima);
-            sideBar.classList.toggle(fadesSty_module_css_1.default.saiBaixo);
+            infsCliente.classList.toggle(estiloFade.saiEsquerda);
+            infsEntrega.classList.toggle(estiloFade.saiCima);
+            sideBar.classList.toggle(estiloFade.saiBaixo);
             /**Depois de aguardar 2 segundos, o fundo do formulário deve receber a classe "saiFundoTela" */
             setTimeout(function () {
-                fundoFosco_1.classList.toggle(telasFull_module_css_1.default.retiraNaEsquerda);
+                fundoFosco_1.classList.toggle(estilo.retiraNaEsquerda);
             }, 300);
         }
     };
@@ -177,27 +171,27 @@ function NovoClienteEntregas() {
             entregaClientEl &&
             buttonClientEl &&
             sideBar) {
-            telaFundorForm.classList.toggle(telasFull_module_css_2.default.retiraNaEsquerda);
+            telaFundorForm.classList.toggle(estiloFullCliente.retiraNaEsquerda);
             setTimeout(function () {
                 // formCliente.classList.toggle(estiloFullCliente.esfumacandoCima);
-                infsClientEl.classList.toggle(fadesSty_module_css_1.default.saiEsquerda);
-                entregaClientEl.classList.toggle(fadesSty_module_css_1.default.saiDireita);
-                buttonClientEl.classList.toggle(fadesSty_module_css_1.default.saiBaixo);
-                sideBar.classList.toggle(fadesSty_module_css_1.default.saiBaixo);
+                infsClientEl.classList.toggle(estiloFade.saiEsquerda);
+                entregaClientEl.classList.toggle(estiloFade.saiDireita);
+                buttonClientEl.classList.toggle(estiloFade.saiBaixo);
+                sideBar.classList.toggle(estiloFade.saiBaixo);
             }, 500);
         }
     };
-    (0, react_1.useEffect)(function () { }, [usuarioLogado]);
+    useEffect(function () { }, [usuarioLogado]);
     return (<>
-      {(usuarioLogado === null || usuarioLogado === void 0 ? void 0 : usuarioLogado.userName) === "Administradores" && (<div className={"".concat(telasFull_module_css_1.default.retiraNaEsquerda, "  ").concat(telasFull_module_css_1.default.telaFullUsuario)} ref={telaFullClient} id="telaNovoClientesForm">
-          <div className={"".concat(telasFull_module_css_1.default.areaForm)}>
+      {(usuarioLogado === null || usuarioLogado === void 0 ? void 0 : usuarioLogado.userName) === "Administradores" && (<div className={"".concat(estilo.retiraNaEsquerda, "  ").concat(estilo.telaFullUsuario)} ref={telaFullClient} id="telaNovoClientesForm">
+          <div className={"".concat(estilo.areaForm)}>
             {/* Sessão responsável por exibir os clientes disponíves no bd para entrega */}
 
-            <form className={"".concat(telasFull_module_css_1.default.formNovoCliente)} onSubmit={function (ev) {
+            <form className={"".concat(estilo.formNovoCliente)} onSubmit={function (ev) {
                 genrandoEntrega(ev);
             }}>
-              <div className={"".concat(fadesSty_module_css_1.default.saiEsquerda, " ").concat(telasFull_module_css_1.default.areaInformsCliente)}>
-                <h2 className={"".concat(telasFull_module_css_1.default.tituloArea)}>
+              <div className={"".concat(estiloFade.saiEsquerda, " ").concat(estilo.areaInformsCliente)}>
+                <h2 className={"".concat(estilo.tituloArea)}>
                   Informações do cliente:
                 </h2>
                 <h3>
@@ -230,8 +224,8 @@ function NovoClienteEntregas() {
                 </h3>
               </div>
 
-              <div className={"".concat(fadesSty_module_css_1.default.saiCima, " ").concat(telasFull_module_css_1.default.areaEntregaInfosNC)}>
-                <div className={"".concat(telasFull_module_css_1.default.areaInformsEntrega)}>
+              <div className={"".concat(estiloFade.saiCima, " ").concat(estilo.areaEntregaInfosNC)}>
+                <div className={"".concat(estilo.areaInformsEntrega)}>
                   <h3>Informações da entrega:</h3>
                   <p>
                     Valor:{" "}
@@ -266,32 +260,32 @@ function NovoClienteEntregas() {
                   </p>
                 </div>
 
-                <button className={"".concat(telasFull_module_css_1.default.botaoGerarEntregaCliente)} type="submit">
+                <button className={"".concat(estilo.botaoGerarEntregaCliente)} type="submit">
                   GERAR ROTA DE ENTREGA
-                  <tb_1.TbTruckDelivery className="size-10 absolute right-1"/>
+                  <TbTruckDelivery className="size-10 absolute right-1"/>
                 </button>
               </div>
             </form>
 
-            <div className={"".concat(fadesSty_module_css_1.default.saiBaixo, " ").concat(telasFull_module_css_1.default.navLateral)}>
+            <div className={"".concat(estiloFade.saiBaixo, " ").concat(estilo.navLateral)}>
               <button onClick={function (ev) {
                 console.log("Clique para fechar ");
                 fechandoTela();
             }}>
-                <fa_1.FaRegWindowClose className={telasFull_module_css_1.default.fecharTela}/>
+                <FaRegWindowClose className={estilo.fecharTela}/>
               </button>
 
-              <div className={"".concat(telasFull_module_css_1.default.buttonDiv, " ").concat(telasFull_module_css_1.default.adcClienteNewForm)} onClick={adicionarCliente}>
-                <io5_1.IoPersonAdd />
+              <div className={"".concat(estilo.buttonDiv, " ").concat(estilo.adcClienteNewForm)} onClick={adicionarCliente}>
+                <IoPersonAdd />
               </div>
 
-              <div className={"".concat(telasFull_module_css_1.default.buttonDiv, " ").concat(telasFull_module_css_1.default.buscaClienteNewForm)} onClick={function () {
+              <div className={"".concat(estilo.buttonDiv, " ").concat(estilo.buscaClienteNewForm)} onClick={function () {
                 fechandoTela();
                 setTimeout(function () {
                     abrindoTelaClientes();
                 }, 800);
             }}>
-                <fa6_1.FaUsersViewfinder />
+                <FaUsersViewfinder />
               </div>
             </div>
           </div>

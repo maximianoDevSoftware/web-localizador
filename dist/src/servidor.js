@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,41 +34,39 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var express_1 = __importDefault(require("express"));
-var cors_1 = __importDefault(require("cors")); // Importando o pacote cors
-var next_1 = __importDefault(require("next"));
-var http_1 = require("http");
-var socket_io_1 = require("socket.io"); // Importando o Server do socket.io
-var connectSocketServer_1 = require("./services/connectSocketServer");
+import { createRequire } from "module";
+var require = createRequire(import.meta.url);
+import express from "express";
+import cors from "cors"; // Importando o pacote cors
+import next from "next";
+import { createServer } from "http";
+import { Server } from "socket.io"; // Importando o Server do socket.io
+import { conexoesSocket } from "./services/connectSocketServer";
 var dev = process.env.NODE_ENV !== "production";
 /** Inicializando o app */
-var app = (0, next_1.default)({ dev: dev });
+var app = next({ dev: dev });
 var tratadorRotas = app.getRequestHandler();
 app.prepare().then(function () { return __awaiter(void 0, void 0, void 0, function () {
     var servidor, servidorEco, io;
     return __generator(this, function (_a) {
-        servidor = (0, express_1.default)();
-        servidorEco = (0, http_1.createServer)(servidor);
-        io = new socket_io_1.Server(servidorEco, {
+        servidor = express();
+        servidorEco = createServer(servidor);
+        io = new Server(servidorEco, {
             cors: {
                 origin: "*", // Adicione todas as origens permitidas aqui
                 methods: ["GET", "POST"],
             },
             transports: ["polling", "websocket"],
         });
-        servidor.use(express_1.default.json());
-        servidor.use((0, cors_1.default)()); // Adicionando o middleware cors
+        servidor.use(express.json());
+        servidor.use(cors()); // Adicionando o middleware cors
         servidor.all("*", function (req, res) {
             return tratadorRotas(req, res);
         });
         /*******************************************
          CONEXÕES COM WEBSOCKET
          ********************************************/
-        (0, connectSocketServer_1.conexoesSocket)(io);
+        conexoesSocket(io);
         servidorEco.listen(3000, function () {
             console.log("> Servidor rodando em http://192.168.3.132:3000");
         });

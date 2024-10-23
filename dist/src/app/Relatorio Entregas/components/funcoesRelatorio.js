@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.valorConjuntoEntrega = valorConjuntoEntrega;
-function valorConjuntoEntrega(conjuntoEntregas) {
+export function valorConjuntoEntrega(conjuntoEntregas) {
     var valorTotal = 0; // Inicializa valorTotal com 0
     conjuntoEntregas.forEach(function (entrega) {
         valorTotal += converterParaNumero(entrega.valor);

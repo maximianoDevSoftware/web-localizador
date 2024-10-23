@@ -1,4 +1,3 @@
-"use strict";
 "use client";
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
@@ -47,39 +46,34 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = ClientesEntregas;
-var telasFull_module_css_1 = __importDefault(require("@/styles/telasFull.module.css"));
-var fadesSty_module_css_1 = __importDefault(require("@/styles/fades/fadesSty.module.css"));
-var telasFull_module_css_2 = __importDefault(require("@/styles/telasFull.module.css"));
-var md_1 = require("react-icons/md");
-var tb_1 = require("react-icons/tb");
-var fa_1 = require("react-icons/fa");
-var md_2 = require("react-icons/md");
-var fa_2 = require("react-icons/fa");
-var io5_1 = require("react-icons/io5");
-var react_1 = require("react");
-var gi_1 = require("react-icons/gi");
-var enderecoCoords_1 = require("@/utils/enderecoCoords");
-var entregasClientesContext_1 = require("@/contexts/entregasClientesContext");
-var contextoUsuario_1 = require("@/contexts/contextoUsuario");
-var socketCliente_1 = __importDefault(require("@/socket/socketCliente"));
+import estilo from "@/styles/telasFull.module.css";
+import estiloFade from "@/styles/fades/fadesSty.module.css";
+import estiloFullCliente from "@/styles/telasFull.module.css";
+import { MdFindReplace } from "react-icons/md";
+import { TbTruckDelivery } from "react-icons/tb";
+import { FaRegWindowClose } from "react-icons/fa";
+import { MdOutlineGroupRemove } from "react-icons/md";
+import { FaUserEdit } from "react-icons/fa";
+import { IoPersonAdd } from "react-icons/io5";
+import { useContext, useEffect, useRef, useState } from "react";
+import { GiConfirmed } from "react-icons/gi";
+import { end4Coords, gerandoDia } from "@/utils/enderecoCoords";
+import { ContextEntregasClientes } from "@/contexts/entregasClientesContext";
+import { contextAutenticacao } from "@/contexts/contextoUsuario";
+import getSocket from "@/socket/socketCliente";
 var controlerRotaClientes = true;
-function ClientesEntregas() {
+export default function ClientesEntregas() {
     var _this = this;
-    var _a = (0, react_1.useContext)(entregasClientesContext_1.ContextEntregasClientes), todosClientes = _a.todosClientes, atualizandoClientes = _a.atualizandoClientes, atualizandoEntregas = _a.atualizandoEntregas;
-    var socket = (0, socketCliente_1.default)();
-    var usuarioLogado = (0, react_1.useContext)(contextoUsuario_1.contextAutenticacao).usuarioLogado;
-    var _b = (0, react_1.useState)({
+    var _a = useContext(ContextEntregasClientes), todosClientes = _a.todosClientes, atualizandoClientes = _a.atualizandoClientes, atualizandoEntregas = _a.atualizandoEntregas;
+    var socket = getSocket();
+    var usuarioLogado = useContext(contextAutenticacao).usuarioLogado;
+    var _b = useState({
         valor: "",
         pagamento: "Dinheiro",
         entregador: "Marcos",
         volume: "Carro",
     }), editData = _b[0], setEditData = _b[1];
-    var _c = (0, react_1.useState)({
+    var _c = useState({
         nome: "",
         telefone: "",
         cidade: "",
@@ -91,7 +85,7 @@ function ClientesEntregas() {
             longitude: 0,
         },
     }), selectCliente = _c[0], setSelectCliente = _c[1];
-    var _d = (0, react_1.useState)({
+    var _d = useState({
         nome: "",
         telefone: "",
         cidade: "",
@@ -103,9 +97,9 @@ function ClientesEntregas() {
             longitude: 0,
         },
     }), dadosNovosClientes = _d[0], setDadosNovosClientes = _d[1];
-    var telaEditClient = (0, react_1.useRef)(null);
-    var telaFullClient = (0, react_1.useRef)(null);
-    var areaClientes = (0, react_1.useRef)(null);
+    var telaEditClient = useRef(null);
+    var telaFullClient = useRef(null);
+    var areaClientes = useRef(null);
     var fechandoTela = function () {
         if (telaFullClient.current) {
             var fundoFosco_1 = telaFullClient.current;
@@ -115,13 +109,13 @@ function ClientesEntregas() {
             var sideBar = fundoFosco_1.children[0].children[2];
             /**O formulario inicialmente recebera a classe "esfumaçandoParaCima" */
             // formCliente.classList.toggle(estilo.esfumacandoCima);
-            infsClientEl.classList.toggle(fadesSty_module_css_1.default.saiEsquerda);
-            entregaClientEl.classList.toggle(fadesSty_module_css_1.default.saiDireita);
-            buttonClientEl.classList.toggle(fadesSty_module_css_1.default.saiBaixo);
-            sideBar.classList.toggle(fadesSty_module_css_1.default.saiBaixo);
+            infsClientEl.classList.toggle(estiloFade.saiEsquerda);
+            entregaClientEl.classList.toggle(estiloFade.saiDireita);
+            buttonClientEl.classList.toggle(estiloFade.saiBaixo);
+            sideBar.classList.toggle(estiloFade.saiBaixo);
             /**Depois de aguardar 2 segundos, o fundo do formulário deve receber a classe "saiFundoTela" */
             setTimeout(function () {
-                fundoFosco_1.classList.toggle(telasFull_module_css_1.default.retiraNaEsquerda);
+                fundoFosco_1.classList.toggle(estilo.retiraNaEsquerda);
             }, 300);
         }
     };
@@ -129,7 +123,7 @@ function ClientesEntregas() {
         if (areaClientes.current) {
             var clientesElements = areaClientes.current.children;
             for (var i = 0; i < clientesElements.length; i++) {
-                clientesElements[i].classList.remove(telasFull_module_css_1.default.areaClientesSelecionado);
+                clientesElements[i].classList.remove(estilo.areaClientesSelecionado);
             }
         }
     };
@@ -139,11 +133,11 @@ function ClientesEntregas() {
             var infsCliente_1 = telaFundorForm.children[0].children[0].children[0];
             var infsEntrega_1 = telaFundorForm.children[0].children[0].children[1];
             var sideBar_1 = telaFundorForm.children[0].children[1];
-            telaFundorForm.classList.toggle(telasFull_module_css_2.default.retiraNaEsquerda);
+            telaFundorForm.classList.toggle(estiloFullCliente.retiraNaEsquerda);
             setTimeout(function () {
-                infsCliente_1.classList.toggle(fadesSty_module_css_1.default.saiEsquerda);
-                infsEntrega_1.classList.toggle(fadesSty_module_css_1.default.saiCima);
-                sideBar_1.classList.toggle(fadesSty_module_css_1.default.saiBaixo);
+                infsCliente_1.classList.toggle(estiloFade.saiEsquerda);
+                infsEntrega_1.classList.toggle(estiloFade.saiCima);
+                sideBar_1.classList.toggle(estiloFade.saiBaixo);
             }, 300);
         }
     };
@@ -158,8 +152,8 @@ function ClientesEntregas() {
                 case 0:
                     console.log("iniciando processo de gerar entrega...");
                     endereco = "".concat(selectCliente.cidade, ", ").concat(selectCliente.bairro, ", ").concat(selectCliente.rua, ", ").concat(selectCliente.numero);
-                    diaAtual = (0, enderecoCoords_1.gerandoDia)();
-                    return [4 /*yield*/, (0, enderecoCoords_1.end4Coords)(endereco)];
+                    diaAtual = gerandoDia();
+                    return [4 /*yield*/, end4Coords(endereco)];
                 case 1:
                     coordenadas = _a.sent();
                     entregaNova = {
@@ -196,13 +190,13 @@ function ClientesEntregas() {
             if (telaEditClient.current) {
                 editTela = telaEditClient.current;
                 editTelaInps = editTela.children[1];
-                editTela.classList.toggle(telasFull_module_css_1.default.telaInfAbertoEdit);
-                editTelaInps.classList.toggle(telasFull_module_css_1.default.telaEditClienteFora);
+                editTela.classList.toggle(estilo.telaInfAbertoEdit);
+                editTelaInps.classList.toggle(estilo.telaEditClienteFora);
             }
             return [2 /*return*/];
         });
     }); };
-    (0, react_1.useEffect)(function () {
+    useEffect(function () {
         if (controlerRotaClientes) {
             controlerRotaClientes = false;
             atualizandoClientes();
@@ -213,36 +207,36 @@ function ClientesEntregas() {
     }, [todosClientes, usuarioLogado]);
     return (<>
       {(usuarioLogado === null || usuarioLogado === void 0 ? void 0 : usuarioLogado.userName) === "Administradores" && (<>
-          <div className={"".concat(telasFull_module_css_1.default.retiraNaEsquerda, " ").concat(telasFull_module_css_1.default.telaFullUsuario)} ref={telaFullClient} id="telaClientesForm">
-            <div className={"".concat(telasFull_module_css_1.default.areaForm)}>
+          <div className={"".concat(estilo.retiraNaEsquerda, " ").concat(estilo.telaFullUsuario)} ref={telaFullClient} id="telaClientesForm">
+            <div className={"".concat(estilo.areaForm)}>
               {/* Sessão responsável por exibir os clientes disponíves no bd para entrega */}
-              <div className={telasFull_module_css_1.default.escolhaClienteComp}>
-                <div className={telasFull_module_css_1.default.areaBuscaCliente}>
+              <div className={estilo.escolhaClienteComp}>
+                <div className={estilo.areaBuscaCliente}>
                   <input type="text" placeholder="Encontrar cliente"/>
                   <button>
-                    <md_1.MdFindReplace className="inline-block size-10"/> Pesquisar
+                    <MdFindReplace className="inline-block size-10"/> Pesquisar
                   </button>
                 </div>
 
-                <div className={telasFull_module_css_1.default.areaClientes} ref={areaClientes}>
+                <div className={estilo.areaClientes} ref={areaClientes}>
                   {todosClientes === null || todosClientes === void 0 ? void 0 : todosClientes.map(function (cliente) {
                 return (<p key={cliente.nome + cliente.id} onClick={function (ev) {
                         removendoCheckedClientese();
-                        ev.currentTarget.classList.toggle(telasFull_module_css_1.default.areaClientesSelecionado);
+                        ev.currentTarget.classList.toggle(estilo.areaClientesSelecionado);
                         setSelectCliente(cliente);
                         setDadosNovosClientes(cliente);
                     }}>
                         {cliente.nome}
-                        <span className={"".concat(telasFull_module_css_1.default.iconeCheckedCliente)}>
-                          <gi_1.GiConfirmed />
+                        <span className={"".concat(estilo.iconeCheckedCliente)}>
+                          <GiConfirmed />
                         </span>
                       </p>);
             })}
                 </div>
               </div>
 
-              <div className={"".concat(telasFull_module_css_1.default.clienteTelaInform)}>
-                <div className={"".concat(fadesSty_module_css_1.default.saiEsquerda, " ").concat(telasFull_module_css_1.default.telaInformsCliente)} ref={telaEditClient}>
+              <div className={"".concat(estilo.clienteTelaInform)}>
+                <div className={"".concat(estiloFade.saiEsquerda, " ").concat(estilo.telaInformsCliente)} ref={telaEditClient}>
                   <div>
                     <h3>Informações do cliente:</h3>
                     <p>Nome: {selectCliente.nome}</p>
@@ -252,11 +246,11 @@ function ClientesEntregas() {
                     <p>Número: {selectCliente.numero}</p>
                   </div>
                   {/* Essa div aqui contem porta todas as modificações que podem ser feitas em um cliente do banco de dados */}
-                  <div className={"".concat(telasFull_module_css_1.default.telaEditClienteFora, " ").concat(telasFull_module_css_1.default.telaEditCliente)}>
+                  <div className={"".concat(estilo.telaEditClienteFora, " ").concat(estilo.telaEditCliente)}>
                     <form onSubmit={function (ev) {
                 ev.preventDefault();
             }}>
-                      <h3 className={telasFull_module_css_2.default.tituloEdit}>
+                      <h3 className={estiloFullCliente.tituloEdit}>
                         Editando dados do Cliente:
                       </h3>
                       <h3>
@@ -283,7 +277,7 @@ function ClientesEntregas() {
                         Número:{" "}
                         <input type="text" name="numero" defaultValue={dadosNovosClientes.numero} onChange={modificandoClientesInfs}/>
                       </h3>
-                      <div className={telasFull_module_css_1.default.areaButtonsUpdateUser}>
+                      <div className={estilo.areaButtonsUpdateUser}>
                         <button onClick={function () {
                 alternandoEditClientTela();
             }}>
@@ -303,7 +297,7 @@ function ClientesEntregas() {
                   </div>
                 </div>
                 {/* Aqui é onde fica o botão para gerar a entrega com todas as informações do formulário preenchidas */}
-                <div className={"".concat(fadesSty_module_css_1.default.saiDireita, " ").concat(telasFull_module_css_1.default.areaInformsEntrega)}>
+                <div className={"".concat(estiloFade.saiDireita, " ").concat(estilo.areaInformsEntrega)}>
                   <h3>Informações da entrega:</h3>
                   <p>
                     Valor:{" "}
@@ -338,32 +332,32 @@ function ClientesEntregas() {
                   </p>
                 </div>
                 {/* Aqui esta o botão para gerar a entrega do cliente */}
-                <button className={"".concat(fadesSty_module_css_1.default.saiBaixo, " ").concat(telasFull_module_css_1.default.botaoGerarEntregaCliente)} onClick={function () {
+                <button className={"".concat(estiloFade.saiBaixo, " ").concat(estilo.botaoGerarEntregaCliente)} onClick={function () {
                 genrandoEntrega();
             }}>
                   GERAR ROTA DE ENTREGA
-                  <tb_1.TbTruckDelivery className="size-10 absolute right-1"/>
+                  <TbTruckDelivery className="size-10 absolute right-1"/>
                 </button>
               </div>
 
-              <div className={"".concat(fadesSty_module_css_1.default.saiBaixo, " ").concat(telasFull_module_css_1.default.navLateral)}>
+              <div className={"".concat(estiloFade.saiBaixo, " ").concat(estilo.navLateral)}>
                 <button onClick={function (ev) {
                 console.log("Clique para fechar ");
                 fechandoTela();
             }}>
-                  <fa_1.FaRegWindowClose className={telasFull_module_css_1.default.fecharTela}/>
+                  <FaRegWindowClose className={estilo.fecharTela}/>
                 </button>
 
                 <button onClick={function () {
                 socket.emit("Deletar Cliente", selectCliente);
             }}>
-                  <md_2.MdOutlineGroupRemove />
+                  <MdOutlineGroupRemove />
                 </button>
 
                 <button onClick={function () {
                 alternandoEditClientTela();
             }}>
-                  <fa_2.FaUserEdit />
+                  <FaUserEdit />
                 </button>
 
                 <button onClick={function () {
@@ -372,7 +366,7 @@ function ClientesEntregas() {
                     abrindoTelaNovoCliente();
                 }, 500);
             }}>
-                  <io5_1.IoPersonAdd />
+                  <IoPersonAdd />
                 </button>
               </div>
             </div>

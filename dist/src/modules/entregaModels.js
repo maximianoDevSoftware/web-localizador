@@ -1,15 +1,9 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.entregaSchema = void 0;
-var mongoose_1 = __importDefault(require("mongoose"));
-exports.entregaSchema = new mongoose_1.default.Schema({
+import mongoose from "mongoose";
+export var entregaSchema = new mongoose.Schema({
     id: {
         type: String,
         required: true,
-        default: function () { return new mongoose_1.default.Types.ObjectId(); },
+        default: function () { return new mongoose.Types.ObjectId(); },
     },
     dia: { type: [Number, Number, Number], required: true },
     status: { type: String, required: true },

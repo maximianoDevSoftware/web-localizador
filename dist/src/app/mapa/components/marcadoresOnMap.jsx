@@ -1,39 +1,32 @@
-"use strict";
 "use client";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.MarcadoresMapaonSide = MarcadoresMapaonSide;
-exports.categorizarEntregas = categorizarEntregas;
-var leaflet_1 = __importDefault(require("leaflet"));
-require("leaflet/dist/leaflet.css");
-require("leaflet-routing-machine/dist/leaflet-routing-machine.css"); // Importando o estilo CSS do Leaflet Routing Machine
-var react_1 = require("react");
-var meuMapa_1 = require("../meuMapa");
-require("leaflet-routing-machine"); // Importando o Leaflet Routing Machine
-var iconesLocation_1 = require("./iconesLocation");
-var contextoUsuario_1 = require("@/contexts/contextoUsuario");
-var entregasClientesContext_1 = require("@/contexts/entregasClientesContext");
-function MarcadoresMapaonSide() {
-    var _a = (0, react_1.useContext)(meuMapa_1.contextMapa), mapaPronto = _a.mapaPronto, adicionandoMarcadores = _a.adicionandoMarcadores;
-    var _b = (0, react_1.useContext)(contextoUsuario_1.contextAutenticacao), marcosUser = _b.marcosUser, ueneUser = _b.ueneUser, leoUser = _b.leoUser, joaoUser = _b.joaoUser;
-    var _c = (0, react_1.useContext)(entregasClientesContext_1.ContextEntregasClientes), entregasDia = _c.entregasDia, entregasAndamento = _c.entregasAndamento, rotasEntregasMotoristas = _c.rotasEntregasMotoristas;
+import leaflet from "leaflet";
+import "leaflet/dist/leaflet.css";
+import "leaflet-routing-machine/dist/leaflet-routing-machine.css"; // Importando o estilo CSS do Leaflet Routing Machine
+import { useContext, useEffect, useRef } from "react";
+import { contextMapa } from "../meuMapa";
+import "leaflet-routing-machine"; // Importando o Leaflet Routing Machine
+import { marcadorMotoristas, markerEntrega } from "./iconesLocation";
+import { contextAutenticacao } from "@/contexts/contextoUsuario";
+import { ContextEntregasClientes } from "@/contexts/entregasClientesContext";
+export function MarcadoresMapaonSide() {
+    var _a = useContext(contextMapa), mapaPronto = _a.mapaPronto, adicionandoMarcadores = _a.adicionandoMarcadores;
+    var _b = useContext(contextAutenticacao), marcosUser = _b.marcosUser, ueneUser = _b.ueneUser, leoUser = _b.leoUser, joaoUser = _b.joaoUser;
+    var _c = useContext(ContextEntregasClientes), entregasDia = _c.entregasDia, entregasAndamento = _c.entregasAndamento, rotasEntregasMotoristas = _c.rotasEntregasMotoristas;
     // Inicialize o ref com o tipo correto
-    var rotaControles = (0, react_1.useRef)({});
+    var rotaControles = useRef({});
     function desenharRota(entregasOrdenadas, usuario, cor) {
         var waypoints = [
-            leaflet_1.default.latLng(usuario.localizacao.latitude, usuario.localizacao.longitude),
+            leaflet.latLng(usuario.localizacao.latitude, usuario.localizacao.longitude),
         ];
         entregasOrdenadas.forEach(function (entrega) {
-            waypoints.push(leaflet_1.default.latLng(entrega.coordenadas.latitude, entrega.coordenadas.longitude));
+            waypoints.push(leaflet.latLng(entrega.coordenadas.latitude, entrega.coordenadas.longitude));
         });
-        var plan = new leaflet_1.default.Routing.Plan(waypoints, {
+        var plan = new leaflet.Routing.Plan(waypoints, {
             createMarker: function (i, wp) {
-                var marcador = leaflet_1.default.marker(wp.latLng, {
+                var marcador = leaflet.marker(wp.latLng, {
                     icon: i === 0
-                        ? (0, iconesLocation_1.marcadorMotoristas)(usuario.userName)
-                        : (0, iconesLocation_1.markerEntrega)(entregasOrdenadas[i - 1]),
+                        ? marcadorMotoristas(usuario.userName)
+                        : markerEntrega(entregasOrdenadas[i - 1]),
                 });
                 if (i !== 0) {
                     var dadosProntos = {
@@ -64,7 +57,7 @@ function MarcadoresMapaonSide() {
                 mapaPronto.removeControl(rotaControles.current[valorUsuario]);
             }
             // Adicionar a nova rota
-            rotaControles.current[valorUsuario] = leaflet_1.default.Routing.control({
+            rotaControles.current[valorUsuario] = leaflet.Routing.control({
                 show: false,
                 waypoints: waypoints,
                 routeWhileDragging: false,
@@ -78,7 +71,7 @@ function MarcadoresMapaonSide() {
             }).addTo(mapaPronto);
         }
     }
-    (0, react_1.useEffect)(function () {
+    useEffect(function () {
         if (entregasDia && entregasAndamento) {
             var todasEntregas = entregasDia.concat(entregasAndamento);
             var entregasCategorizadas = categorizarEntregas(todasEntregas);
@@ -107,7 +100,7 @@ function MarcadoresMapaonSide() {
       <p>preenchendo</p>
     </div>);
 }
-function categorizarEntregas(todasEntregas) {
+export function categorizarEntregas(todasEntregas) {
     var entregasMarcos = [];
     var entregasUene = [];
     var entregasLeo = [];

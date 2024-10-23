@@ -1,27 +1,3 @@
-"use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -58,17 +34,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.conexoesSocket = conexoesSocket;
-var controlesBDServer_1 = __importStar(require("./controlesBDServer"));
-function conexoesSocket(io) {
+import autenticandoUsuario, { atualizandoCliente, atualziandoEntregas, criandoCliente, criandoEntrega, deletandoCliente, deletandoEntrega, entregasDoDia, todasEntregasRelatorio, todosClientes, todosUsuariosBanco, } from "./controlesBDServer";
+export function conexoesSocket(io) {
     var _this = this;
     io.on("connection", function (socket) {
         console.log("Cliente conectado, seu socket foi criado com sucesso.");
         socket.on("Autenticar Usuario", function (usuario) {
             console.log("Um usuário tentando logar...");
             console.log(usuario);
-            (0, controlesBDServer_1.default)(usuario).then(function (objetoAutenticate) {
+            autenticandoUsuario(usuario).then(function (objetoAutenticate) {
                 console.log("Usuario autenticado pronto para uso");
                 socket.emit("Usuario Autenticado", objetoAutenticate.usuarioLogado);
             });
@@ -81,7 +55,7 @@ function conexoesSocket(io) {
             var minhasEntregas;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, (0, controlesBDServer_1.entregasDoDia)()];
+                    case 0: return [4 /*yield*/, entregasDoDia()];
                     case 1:
                         minhasEntregas = _a.sent();
                         callBack(minhasEntregas);
@@ -93,7 +67,7 @@ function conexoesSocket(io) {
             var meusClientes;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, (0, controlesBDServer_1.todosClientes)()];
+                    case 0: return [4 /*yield*/, todosClientes()];
                     case 1:
                         meusClientes = _a.sent();
                         callBack(meusClientes);
@@ -105,7 +79,7 @@ function conexoesSocket(io) {
             var todasEntregasRel;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, (0, controlesBDServer_1.todasEntregasRelatorio)()];
+                    case 0: return [4 /*yield*/, todasEntregasRelatorio()];
                     case 1:
                         todasEntregasRel = _a.sent();
                         retorno(todasEntregasRel);
@@ -117,7 +91,7 @@ function conexoesSocket(io) {
             var todasEntregas;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, (0, controlesBDServer_1.atualziandoEntregas)(entregaUpdate)];
+                    case 0: return [4 /*yield*/, atualziandoEntregas(entregaUpdate)];
                     case 1:
                         todasEntregas = _a.sent();
                         socket.emit("Entregas Atualizadas", todasEntregas);
@@ -129,7 +103,7 @@ function conexoesSocket(io) {
             var todasEntregas;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, (0, controlesBDServer_1.deletandoEntrega)(entregaDelete)];
+                    case 0: return [4 /*yield*/, deletandoEntrega(entregaDelete)];
                     case 1:
                         todasEntregas = _a.sent();
                         socket.emit("Entregas Atualizadas", todasEntregas);
@@ -147,7 +121,7 @@ function conexoesSocket(io) {
             var todasEntregas;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, (0, controlesBDServer_1.criandoEntrega)(entregaGerada)];
+                    case 0: return [4 /*yield*/, criandoEntrega(entregaGerada)];
                     case 1:
                         todasEntregas = _a.sent();
                         socket.emit("Entregas Atualizadas", todasEntregas);
@@ -158,7 +132,7 @@ function conexoesSocket(io) {
         socket.on("Criar Cliente", function (clienteGerado) { return __awaiter(_this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, (0, controlesBDServer_1.criandoCliente)(clienteGerado)];
+                    case 0: return [4 /*yield*/, criandoCliente(clienteGerado)];
                     case 1:
                         _a.sent();
                         return [2 /*return*/];
@@ -168,7 +142,7 @@ function conexoesSocket(io) {
         socket.on("Alterar Cliente", function (clienteUpdate) { return __awaiter(_this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, (0, controlesBDServer_1.atualizandoCliente)(clienteUpdate)];
+                    case 0: return [4 /*yield*/, atualizandoCliente(clienteUpdate)];
                     case 1:
                         _a.sent();
                         return [2 /*return*/];
@@ -178,7 +152,7 @@ function conexoesSocket(io) {
         socket.on("Deletar Cliente", function (clienteDelete) { return __awaiter(_this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, (0, controlesBDServer_1.deletandoCliente)(clienteDelete)];
+                    case 0: return [4 /*yield*/, deletandoCliente(clienteDelete)];
                     case 1:
                         _a.sent();
                         return [2 /*return*/];
@@ -193,7 +167,7 @@ function conexoesSocket(io) {
         });
         socket.on("solicitar-usuarios", function () { return __awaiter(_this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                (0, controlesBDServer_1.todosUsuariosBanco)().then(function (dados) {
+                todosUsuariosBanco().then(function (dados) {
                     socket.emit("todos-usuarios", dados);
                 });
                 return [2 /*return*/];

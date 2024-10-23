@@ -1,4 +1,3 @@
-"use strict";
 "use client";
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
@@ -47,28 +46,23 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = EntregaSingular;
-var sideBar_module_css_1 = __importDefault(require("@/styles/sideBar.module.css"));
-var md_1 = require("react-icons/md");
-var md_2 = require("react-icons/md");
-var cg_1 = require("react-icons/cg");
-var react_1 = require("react");
-var fa_1 = require("react-icons/fa");
-var entregasClientesContext_1 = require("@/contexts/entregasClientesContext");
-var socketCliente_1 = __importDefault(require("@/socket/socketCliente"));
-var meuMapa_1 = require("@/app/mapa/meuMapa");
+import estilo from "@/styles/sideBar.module.css";
+import { MdOutlineMessage } from "react-icons/md";
+import { MdEditSquare } from "react-icons/md";
+import { CgExtensionRemove } from "react-icons/cg";
+import { useContext, useEffect, useState } from "react";
+import { FaSearchLocation } from "react-icons/fa";
+import { ContextEntregasClientes } from "@/contexts/entregasClientesContext";
+import getSocket from "@/socket/socketCliente";
+import { contextMapa } from "@/app/mapa/meuMapa";
 var controladorInicialEntregas = true;
-var socket = (0, socketCliente_1.default)();
-function EntregaSingular() {
+var socket = getSocket();
+export default function EntregaSingular() {
     // const { mapaPronto, marcadores } = useContext(contextMapa);
-    var _a = (0, react_1.useContext)(entregasClientesContext_1.ContextEntregasClientes), entregasDia = _a.entregasDia, atualizandoEntregas = _a.atualizandoEntregas;
-    var mapaPronto = (0, react_1.useContext)(meuMapa_1.contextMapa).mapaPronto;
-    var _b = (0, react_1.useState)(), dadosUpdate = _b[0], setDadosUpdate = _b[1];
-    var _c = (0, react_1.useState)({
+    var _a = useContext(ContextEntregasClientes), entregasDia = _a.entregasDia, atualizandoEntregas = _a.atualizandoEntregas;
+    var mapaPronto = useContext(contextMapa).mapaPronto;
+    var _b = useState(), dadosUpdate = _b[0], setDadosUpdate = _b[1];
+    var _c = useState({
         nome: "",
         telefone: "",
         cidade: "",
@@ -83,7 +77,7 @@ function EntregaSingular() {
     var removendoEntrega = function (entrega) {
         socket.emit("Deletar Entrega", entrega);
     };
-    (0, react_1.useEffect)(function () {
+    useEffect(function () {
         if (controladorInicialEntregas) {
             controladorInicialEntregas = false;
             atualizandoEntregas();
@@ -97,17 +91,17 @@ function EntregaSingular() {
             var _a;
             setDadosFormUpdate(__assign(__assign({}, dadosFormUpdate), (_a = {}, _a[event.target.name] = event.target.value, _a)));
         };
-        return (<div className={"".concat(sideBar_module_css_1.default.caixaEntrega, " ")} /**${estilo.caixaAberta} */ key={entrega.nome + entrega.id}>
-        <div className={sideBar_module_css_1.default.tituloCaixa} onClick={function (ev) {
+        return (<div className={"".concat(estilo.caixaEntrega, " ")} /**${estilo.caixaAberta} */ key={entrega.nome + entrega.id}>
+        <div className={estilo.tituloCaixa} onClick={function (ev) {
                 console.log("Peguei o click no titulo da entrega");
                 var boxInfoEntrega = ev.currentTarget.parentElement;
-                boxInfoEntrega === null || boxInfoEntrega === void 0 ? void 0 : boxInfoEntrega.classList.toggle(sideBar_module_css_1.default.caixaAberta);
+                boxInfoEntrega === null || boxInfoEntrega === void 0 ? void 0 : boxInfoEntrega.classList.toggle(estilo.caixaAberta);
                 setDadosUpdate(entrega);
             }}>
           <h3>{entrega.nome}</h3>
         </div>
 
-        <div className={sideBar_module_css_1.default.informCaixa}>
+        <div className={estilo.informCaixa}>
           <p>Bairro: {entrega.bairro}</p>
           <p>Rua: {entrega.rua}</p>
           <p>Número: {entrega.numero}</p>
@@ -117,34 +111,34 @@ function EntregaSingular() {
           <p>Pagamento: {entrega.pagamento}</p>
         </div>
 
-        <div className={sideBar_module_css_1.default.botoesCaixa}>
+        <div className={estilo.botoesCaixa}>
           {/**Interação de enviar mensagem para o cliente */}
-          <button className={sideBar_module_css_1.default.interMensagens} onClick={function (ev) {
+          <button className={estilo.interMensagens} onClick={function (ev) {
                 var esteBTN = ev.currentTarget;
-                esteBTN.classList.add(sideBar_module_css_1.default.executandoMensagem);
+                esteBTN.classList.add(estilo.executandoMensagem);
                 enviarMinhaMsgDisplay(entrega).then(function () {
                     console.log("ouvindo quando enviad");
-                    esteBTN.classList.remove(sideBar_module_css_1.default.executandoMensagem);
-                    esteBTN.classList.add(sideBar_module_css_1.default.mensagemEnviada);
+                    esteBTN.classList.remove(estilo.executandoMensagem);
+                    esteBTN.classList.add(estilo.mensagemEnviada);
                 });
             }}>
-            <md_1.MdOutlineMessage className="size-8"/>
+            <MdOutlineMessage className="size-8"/>
           </button>
           {/* Botão para centralizar no mapa o marcador da entrega */}
-          <button className={sideBar_module_css_1.default.editLocationBTN} onClick={function () {
+          <button className={estilo.editLocationBTN} onClick={function () {
                 mapaPronto === null || mapaPronto === void 0 ? void 0 : mapaPronto.flyTo([entrega.coordenadas.latitude, entrega.coordenadas.longitude], 17, {
                     duration: 3,
                 });
             }}>
-            <fa_1.FaSearchLocation className="size-8"/>
+            <FaSearchLocation className="size-8"/>
           </button>
           {/**Botão de interação para editar a entrega */}
-          <button className={sideBar_module_css_1.default.interEdit} onClick={function (ev) {
+          <button className={estilo.interEdit} onClick={function (ev) {
                 var _a, _b, _c;
                 var cxEntrega = (_a = ev.currentTarget.parentElement) === null || _a === void 0 ? void 0 : _a.parentElement;
                 var cxEditando = (_c = (_b = ev.currentTarget.parentElement) === null || _b === void 0 ? void 0 : _b.parentElement) === null || _c === void 0 ? void 0 : _c.lastElementChild;
-                cxEntrega === null || cxEntrega === void 0 ? void 0 : cxEntrega.classList.toggle(sideBar_module_css_1.default.caixaEditando);
-                cxEditando === null || cxEditando === void 0 ? void 0 : cxEditando.classList.toggle(sideBar_module_css_1.default.areaBotoesEditFora);
+                cxEntrega === null || cxEntrega === void 0 ? void 0 : cxEntrega.classList.toggle(estilo.caixaEditando);
+                cxEditando === null || cxEditando === void 0 ? void 0 : cxEditando.classList.toggle(estilo.areaBotoesEditFora);
                 setDadosFormUpdate({
                     nome: entrega.nome,
                     cidade: entrega.cidade,
@@ -158,17 +152,17 @@ function EntregaSingular() {
                     telefone: entrega.telefone ? entrega.telefone : "",
                 });
             }}>
-            <md_2.MdEditSquare className="size-8"/>
+            <MdEditSquare className="size-8"/>
           </button>
           {/**Interação de remover a entrega das entregas do dia*/}
-          <button className={sideBar_module_css_1.default.interRemove} onClick={function () {
+          <button className={estilo.interRemove} onClick={function () {
                 removendoEntrega(entrega);
             }}>
-            <cg_1.CgExtensionRemove className="size-8"/>
+            <CgExtensionRemove className="size-8"/>
           </button>
         </div>
 
-        <div className={" ".concat(sideBar_module_css_1.default.caixaEditEntrega, " ").concat(sideBar_module_css_1.default.areaBotoesEditFora)} id={entrega.id}>
+        <div className={" ".concat(estilo.caixaEditEntrega, " ").concat(estilo.areaBotoesEditFora)} id={entrega.id}>
           <h3>
             Nome:{" "}
             <input defaultValue={entrega.nome} name="nome" onChange={modificandoInputs}/>
@@ -214,12 +208,12 @@ function EntregaSingular() {
             <input defaultValue={entrega.entregador} name="entregador" onChange={modificandoInputs}/>
           </h3>
 
-          <div className={"".concat(sideBar_module_css_1.default.areaBotoesEditEntrega)}>
+          <div className={"".concat(estilo.areaBotoesEditEntrega)}>
             <button onClick={function (ev) {
                 var _a, _b, _c, _d;
-                (_b = (_a = ev.currentTarget.parentElement) === null || _a === void 0 ? void 0 : _a.parentElement) === null || _b === void 0 ? void 0 : _b.classList.toggle(sideBar_module_css_1.default.areaBotoesEditFora);
+                (_b = (_a = ev.currentTarget.parentElement) === null || _a === void 0 ? void 0 : _a.parentElement) === null || _b === void 0 ? void 0 : _b.classList.toggle(estilo.areaBotoesEditFora);
                 var cxEntrega = (_d = (_c = ev.currentTarget.parentElement) === null || _c === void 0 ? void 0 : _c.parentElement) === null || _d === void 0 ? void 0 : _d.parentElement;
-                cxEntrega === null || cxEntrega === void 0 ? void 0 : cxEntrega.classList.toggle(sideBar_module_css_1.default.caixaEditando);
+                cxEntrega === null || cxEntrega === void 0 ? void 0 : cxEntrega.classList.toggle(estilo.caixaEditando);
             }}>
               Cancelar
             </button>

@@ -1,15 +1,9 @@
-"use strict";
 "use client";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = TabelaEntregasDaSemana;
-var react_1 = require("react");
-var tabelasSty_module_css_1 = __importDefault(require("./tabelasSty.module.css"));
-var entregasClientesContext_1 = require("@/contexts/entregasClientesContext");
-function TabelaEntregasDaSemana() {
-    var entregasRelatorio = (0, react_1.useContext)(entregasClientesContext_1.ContextEntregasClientes).entregasRelatorio;
+import { useContext } from "react";
+import estilo from "./tabelasSty.module.css";
+import { ContextEntregasClientes } from "@/contexts/entregasClientesContext";
+export default function TabelaEntregasDaSemana() {
+    var entregasRelatorio = useContext(ContextEntregasClientes).entregasRelatorio;
     var hoje = new Date();
     var diaHoje = [hoje.getDate(), hoje.getMonth() + 1, hoje.getFullYear()];
     var entregasConcluidas = entregasRelatorio === null || entregasRelatorio === void 0 ? void 0 : entregasRelatorio.filter(function (entrega) {
@@ -18,7 +12,7 @@ function TabelaEntregasDaSemana() {
             return entrega;
         }
     });
-    return (<table className={"".concat(tabelasSty_module_css_1.default.tabelaSemana)}>
+    return (<table className={"".concat(estilo.tabelaSemana)}>
       <thead>
         <tr>
           <th>Nome da entrega:</th>
@@ -30,12 +24,12 @@ function TabelaEntregasDaSemana() {
       <tbody>
         {entregasConcluidas === null || entregasConcluidas === void 0 ? void 0 : entregasConcluidas.map(function (entrega, index) {
             return (<tr key={index}>
-              <td className={"".concat(tabelasSty_module_css_1.default.campoNome)}>{entrega.nome}</td>
-              <td className={"".concat(tabelasSty_module_css_1.default.campoStatus)}>{entrega.status}</td>
-              <td className={"".concat(tabelasSty_module_css_1.default.campoMotorista)}>
+              <td className={"".concat(estilo.campoNome)}>{entrega.nome}</td>
+              <td className={"".concat(estilo.campoStatus)}>{entrega.status}</td>
+              <td className={"".concat(estilo.campoMotorista)}>
                 {entrega.entregador}
               </td>
-              <td className={"".concat(tabelasSty_module_css_1.default.campoValor)}>R$ {entrega.valor}</td>
+              <td className={"".concat(estilo.campoValor)}>R$ {entrega.valor}</td>
             </tr>);
         })}
       </tbody>

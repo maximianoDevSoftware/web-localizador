@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,35 +34,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = autenticandoUsuario;
-exports.todosUsuariosBd = todosUsuariosBd;
-exports.atualizandoUsuarios = atualizandoUsuarios;
-exports.todasEntregasBancoDados = todasEntregasBancoDados;
-exports.entregasDoDia = entregasDoDia;
-exports.atualziandoEntregas = atualziandoEntregas;
-exports.deletandoEntrega = deletandoEntrega;
-exports.todasEntregas = todasEntregas;
-exports.meusClientes = meusClientes;
-exports.todasEntregasRelatorio = todasEntregasRelatorio;
-exports.todosClientes = todosClientes;
-exports.criandoEntrega = criandoEntrega;
-exports.criandoCliente = criandoCliente;
-exports.atualizandoCliente = atualizandoCliente;
-exports.deletandoCliente = deletandoCliente;
-exports.todosUsuariosBanco = todosUsuariosBanco;
-var conectandoClientes_1 = __importDefault(require("@/database/conectandoClientes"));
-var conectandoEntregas_1 = __importDefault(require("@/database/conectandoEntregas"));
-var conectUsers_1 = __importDefault(require("@/database/conectUsers"));
-function autenticandoUsuario(dados) {
+import dataConectClientes from "@/database/conectandoClientes";
+import dataConectEntregas from "@/database/conectandoEntregas";
+import dataConnectUsuarios from "@/database/conectUsers";
+export default function autenticandoUsuario(dados) {
     return __awaiter(this, void 0, void 0, function () {
         var conexaoUsuarios, modeloUsuarios, usuarioEncontrado, todosUsuarios;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, (0, conectUsers_1.default)()];
+                case 0: return [4 /*yield*/, dataConnectUsuarios()];
                 case 1:
                     conexaoUsuarios = _a.sent();
                     modeloUsuarios = conexaoUsuarios.model("usuarios");
@@ -82,12 +61,12 @@ function autenticandoUsuario(dados) {
         });
     });
 }
-function todosUsuariosBd() {
+export function todosUsuariosBd() {
     return __awaiter(this, void 0, void 0, function () {
         var conexaoUsuarios, modeloUsuarios, allUsers;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, (0, conectUsers_1.default)()];
+                case 0: return [4 /*yield*/, dataConnectUsuarios()];
                 case 1:
                     conexaoUsuarios = _a.sent();
                     modeloUsuarios = conexaoUsuarios.model("usuarios");
@@ -100,12 +79,12 @@ function todosUsuariosBd() {
         });
     });
 }
-function atualizandoUsuarios(usuarioUppdate) {
+export function atualizandoUsuarios(usuarioUppdate) {
     return __awaiter(this, void 0, void 0, function () {
         var conexaoUsuarios, modeloUsuarios, userEntregaBD;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, (0, conectUsers_1.default)()];
+                case 0: return [4 /*yield*/, dataConnectUsuarios()];
                 case 1:
                     conexaoUsuarios = _a.sent();
                     modeloUsuarios = conexaoUsuarios.model("usuarios");
@@ -122,12 +101,12 @@ function atualizandoUsuarios(usuarioUppdate) {
         });
     });
 }
-function todasEntregasBancoDados() {
+export function todasEntregasBancoDados() {
     return __awaiter(this, void 0, void 0, function () {
         var conexaoEntregas, modeloEntregas, todasEntregas;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, (0, conectandoEntregas_1.default)()];
+                case 0: return [4 /*yield*/, dataConectEntregas()];
                 case 1:
                     conexaoEntregas = _a.sent();
                     modeloEntregas = conexaoEntregas.model("entregas");
@@ -149,14 +128,14 @@ var dataDeHoje = function () {
     var dataHoje = [diaHoje, mesHoje, anoHoje];
     return dataHoje;
 };
-function entregasDoDia() {
+export function entregasDoDia() {
     return __awaiter(this, void 0, void 0, function () {
         var dataHoje, conexaoEntregas, modeloEntregas, todasEntregas;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     dataHoje = dataDeHoje();
-                    return [4 /*yield*/, (0, conectandoEntregas_1.default)()];
+                    return [4 /*yield*/, dataConectEntregas()];
                 case 1:
                     conexaoEntregas = _a.sent();
                     modeloEntregas = conexaoEntregas.model("entregas");
@@ -171,7 +150,7 @@ function entregasDoDia() {
         });
     });
 }
-function atualziandoEntregas(entregaUpdate) {
+export function atualziandoEntregas(entregaUpdate) {
     return __awaiter(this, void 0, void 0, function () {
         var dataHoje, connEntrega, modelEntrega, entregaGerada, userEntregaBD, minhasEntregas;
         return __generator(this, function (_a) {
@@ -179,7 +158,7 @@ function atualziandoEntregas(entregaUpdate) {
                 case 0:
                     console.log(entregaUpdate);
                     dataHoje = dataDeHoje();
-                    return [4 /*yield*/, (0, conectandoEntregas_1.default)()];
+                    return [4 /*yield*/, dataConectEntregas()];
                 case 1:
                     connEntrega = _a.sent();
                     modelEntrega = connEntrega.model("entregas");
@@ -209,7 +188,7 @@ function atualziandoEntregas(entregaUpdate) {
         });
     });
 }
-function deletandoEntrega(entregaDelete) {
+export function deletandoEntrega(entregaDelete) {
     return __awaiter(this, void 0, void 0, function () {
         var dataHoje, connEntrega, modelEntrega, entregaGerada, retornoDel, minhasEntregas;
         return __generator(this, function (_a) {
@@ -217,7 +196,7 @@ function deletandoEntrega(entregaDelete) {
                 case 0:
                     dataHoje = dataDeHoje();
                     console.log(entregaDelete);
-                    return [4 /*yield*/, (0, conectandoEntregas_1.default)()];
+                    return [4 /*yield*/, dataConectEntregas()];
                 case 1:
                     connEntrega = _a.sent();
                     modelEntrega = connEntrega.model("entregas");
@@ -239,14 +218,14 @@ function deletandoEntrega(entregaDelete) {
     });
 }
 /***ADAPTANDO CLIENTE E ENTREGAS CONTEXT */
-function todasEntregas() {
+export function todasEntregas() {
     return __awaiter(this, void 0, void 0, function () {
         var dataHoje, conexaoEntregas, modeloEntregas, todasEntregas;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     dataHoje = dataDeHoje();
-                    return [4 /*yield*/, (0, conectandoEntregas_1.default)()];
+                    return [4 /*yield*/, dataConectEntregas()];
                 case 1:
                     conexaoEntregas = _a.sent();
                     modeloEntregas = conexaoEntregas.model("entregas");
@@ -261,12 +240,12 @@ function todasEntregas() {
         });
     });
 }
-function meusClientes() {
+export function meusClientes() {
     return __awaiter(this, void 0, void 0, function () {
         var connClientes, modelClientes, todosClientes;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, (0, conectandoClientes_1.default)()];
+                case 0: return [4 /*yield*/, dataConectClientes()];
                 case 1:
                     connClientes = _a.sent();
                     modelClientes = connClientes.model("clientesEco");
@@ -279,12 +258,12 @@ function meusClientes() {
         });
     });
 }
-function todasEntregasRelatorio() {
+export function todasEntregasRelatorio() {
     return __awaiter(this, void 0, void 0, function () {
         var connEntrega, modelEntrega, entregasRelatorio;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, (0, conectandoEntregas_1.default)()];
+                case 0: return [4 /*yield*/, dataConectEntregas()];
                 case 1:
                     connEntrega = _a.sent();
                     modelEntrega = connEntrega.model("entregas");
@@ -297,12 +276,12 @@ function todasEntregasRelatorio() {
         });
     });
 }
-function todosClientes() {
+export function todosClientes() {
     return __awaiter(this, void 0, void 0, function () {
         var conexaoClientes, modeloClientes, todosClientes;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, (0, conectandoClientes_1.default)()];
+                case 0: return [4 /*yield*/, dataConectClientes()];
                 case 1:
                     conexaoClientes = _a.sent();
                     modeloClientes = conexaoClientes.model("clientesEco");
@@ -315,12 +294,12 @@ function todosClientes() {
         });
     });
 }
-function criandoEntrega(entrega) {
+export function criandoEntrega(entrega) {
     return __awaiter(this, void 0, void 0, function () {
         var connEntrega, modelEntrega, entregaGerada, dataHoje, todasEntregas;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, (0, conectandoEntregas_1.default)()];
+                case 0: return [4 /*yield*/, dataConectEntregas()];
                 case 1:
                     connEntrega = _a.sent();
                     modelEntrega = connEntrega.model("entregas");
@@ -342,12 +321,12 @@ function criandoEntrega(entrega) {
         });
     });
 }
-function criandoCliente(cliente) {
+export function criandoCliente(cliente) {
     return __awaiter(this, void 0, void 0, function () {
         var connClientes, modelClientes, clienteGerado, todosClientes;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, (0, conectandoClientes_1.default)()];
+                case 0: return [4 /*yield*/, dataConectClientes()];
                 case 1:
                     connClientes = _a.sent();
                     modelClientes = connClientes.model("entregas");
@@ -366,14 +345,14 @@ function criandoCliente(cliente) {
         });
     });
 }
-function atualizandoCliente(cliente) {
+export function atualizandoCliente(cliente) {
     return __awaiter(this, void 0, void 0, function () {
         var connClientes, modelClientes, clienteGerado, userCliente, todosClientes;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     console.log(cliente);
-                    return [4 /*yield*/, (0, conectandoClientes_1.default)()];
+                    return [4 /*yield*/, dataConectClientes()];
                 case 1:
                     connClientes = _a.sent();
                     modelClientes = connClientes.model("entregas");
@@ -402,14 +381,14 @@ function atualizandoCliente(cliente) {
         });
     });
 }
-function deletandoCliente(cliente) {
+export function deletandoCliente(cliente) {
     return __awaiter(this, void 0, void 0, function () {
         var connClientes, modelClientes, clienteGerado, retornoDel, todosClientes;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     console.log(cliente);
-                    return [4 /*yield*/, (0, conectandoClientes_1.default)()];
+                    return [4 /*yield*/, dataConectClientes()];
                 case 1:
                     connClientes = _a.sent();
                     modelClientes = connClientes.model("entregas");
@@ -429,12 +408,12 @@ function deletandoCliente(cliente) {
         });
     });
 }
-function todosUsuariosBanco() {
+export function todosUsuariosBanco() {
     return __awaiter(this, void 0, void 0, function () {
         var conexaoUsuarios, modeloUsuarios, allUsers;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, (0, conectUsers_1.default)()];
+                case 0: return [4 /*yield*/, dataConnectUsuarios()];
                 case 1:
                     conexaoUsuarios = _a.sent();
                     modeloUsuarios = conexaoUsuarios.model("usuarios");

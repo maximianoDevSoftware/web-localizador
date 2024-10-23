@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 var config = {
     content: [
         "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -16,4 +14,4 @@ var config = {
     },
     plugins: [],
 };
-exports.default = config;
+export default config;

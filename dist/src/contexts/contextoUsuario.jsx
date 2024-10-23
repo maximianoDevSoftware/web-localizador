@@ -1,4 +1,3 @@
-"use strict";
 "use client";
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
@@ -11,46 +10,17 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.contextAutenticacao = void 0;
-exports.ProvedorAutenticacao = ProvedorAutenticacao;
-var react_1 = __importStar(require("react"));
-var telaAutenticacao_module_css_1 = __importDefault(require("@/styles/telaAutenticacao.module.css"));
-var socketCliente_1 = __importDefault(require("../socket/socketCliente")); // Importando o singleton do socket
-var fotoUsuario_1 = __importDefault(require("./components/fotoUsuario"));
+import React, { createContext, useEffect, useRef, useState, } from "react";
+import estilo from "@/styles/telaAutenticacao.module.css";
+import getSocket from "../socket/socketCliente"; // Importando o singleton do socket
+import FotoUsuarioLogin from "./components/fotoUsuario";
 /**Incializando conexão com webSocket */
-var socket = (0, socketCliente_1.default)(); // Obtendo a instância do socket
-exports.contextAutenticacao = (0, react_1.createContext)({});
-function ProvedorAutenticacao(_a) {
+var socket = getSocket(); // Obtendo a instância do socket
+export var contextAutenticacao = createContext({});
+export function ProvedorAutenticacao(_a) {
     var children = _a.children;
-    var telaAutenticacao = (0, react_1.useRef)(null);
-    var _b = (0, react_1.useState)({
+    var telaAutenticacao = useRef(null);
+    var _b = useState({
         userName: "",
         senha: "",
         status: "",
@@ -59,7 +29,7 @@ function ProvedorAutenticacao(_a) {
             longitude: 0,
         },
     }), usuarioLogado = _b[0], setUsuarioLogado = _b[1];
-    var _c = (0, react_1.useState)({
+    var _c = useState({
         userName: "Administradores",
         status: "Carregando",
         senha: "ecoadm",
@@ -68,7 +38,7 @@ function ProvedorAutenticacao(_a) {
             longitude: 0,
         },
     }), admUser = _c[0], setAdmUser = _c[1];
-    var _d = (0, react_1.useState)({
+    var _d = useState({
         userName: "Marcos",
         status: "Carregando",
         senha: "ecomarcos",
@@ -77,7 +47,7 @@ function ProvedorAutenticacao(_a) {
             longitude: -48.5410957,
         },
     }), marcosUser = _d[0], setMarcosUser = _d[1];
-    var _e = (0, react_1.useState)({
+    var _e = useState({
         userName: "Uene",
         status: "Carregando",
         senha: "ecouene",
@@ -86,7 +56,7 @@ function ProvedorAutenticacao(_a) {
             longitude: 0,
         },
     }), ueneUser = _e[0], setUeneUser = _e[1];
-    var _f = (0, react_1.useState)({
+    var _f = useState({
         userName: "Leo",
         status: "Carregando",
         senha: "ecoleo",
@@ -95,7 +65,7 @@ function ProvedorAutenticacao(_a) {
             longitude: 0,
         },
     }), leoUser = _f[0], setLeoUser = _f[1];
-    var _g = (0, react_1.useState)({
+    var _g = useState({
         userName: "Joao",
         status: "Carregando",
         senha: "ecojoao",
@@ -104,7 +74,7 @@ function ProvedorAutenticacao(_a) {
             longitude: 0,
         },
     }), joaoUser = _g[0], setJoaoUser = _g[1];
-    var _h = (0, react_1.useState)({
+    var _h = useState({
         userName: "Administradores",
         senha: "",
     }), dadosForm = _h[0], setDadosForm = _h[1];
@@ -121,7 +91,7 @@ function ProvedorAutenticacao(_a) {
         socket.emit("Autenticar Usuario", dadosForm);
     };
     /**Effect que recebe do servidor o usuário que foi logado, e define o estado dele dentro do context client administrador */
-    (0, react_1.useEffect)(function () {
+    useEffect(function () {
         socket.on("Usuario Autenticado", function (usuarioAutenticadoServidor) {
             var _a;
             atualizandoTodosUsuarios();
@@ -184,7 +154,7 @@ function ProvedorAutenticacao(_a) {
                     }
                 });
             });
-            (_a = telaAutenticacao.current) === null || _a === void 0 ? void 0 : _a.classList.toggle(telaAutenticacao_module_css_1.default.telaAutenticFora);
+            (_a = telaAutenticacao.current) === null || _a === void 0 ? void 0 : _a.classList.toggle(estilo.telaAutenticFora);
             console.log("Usuário autenticado com sucesso. Seu nome: " +
                 usuarioAutenticadoServidor.userName);
         });
@@ -195,13 +165,13 @@ function ProvedorAutenticacao(_a) {
         };
     }, []);
     /**Effect para ouvir alterações nas localizações dos motoristas */
-    return (<exports.contextAutenticacao.Provider value={{ usuarioLogado: usuarioLogado, marcosUser: marcosUser, ueneUser: ueneUser, leoUser: leoUser, joaoUser: joaoUser }}>
+    return (<contextAutenticacao.Provider value={{ usuarioLogado: usuarioLogado, marcosUser: marcosUser, ueneUser: ueneUser, leoUser: leoUser, joaoUser: joaoUser }}>
       <>
-        <div className={"".concat(telaAutenticacao_module_css_1.default.telaAutenticacao, " ").concat(telaAutenticacao_module_css_1.default.telaAutenticForaaaaa)} ref={telaAutenticacao}>
-          <div className={telaAutenticacao_module_css_1.default.areaLogin}>
-            <fotoUsuario_1.default userSelectName={"".concat(dadosForm.userName)}></fotoUsuario_1.default>
+        <div className={"".concat(estilo.telaAutenticacao, " ").concat(estilo.telaAutenticForaaaaa)} ref={telaAutenticacao}>
+          <div className={estilo.areaLogin}>
+            <FotoUsuarioLogin userSelectName={"".concat(dadosForm.userName)}></FotoUsuarioLogin>
 
-            <form className={telaAutenticacao_module_css_1.default.formAutent} onSubmit={autenticandoFormulario}>
+            <form className={estilo.formAutent} onSubmit={autenticandoFormulario}>
               <select name="userName" onChange={atualizandoFormulario}>
                 <option value="Administradores">Administradores</option>
                 <option value="Marcos">Marcos</option>
@@ -219,5 +189,5 @@ function ProvedorAutenticacao(_a) {
         </div>
         {children}
       </>
-    </exports.contextAutenticacao.Provider>);
+    </contextAutenticacao.Provider>);
 }

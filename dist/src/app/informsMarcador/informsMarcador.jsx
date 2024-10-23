@@ -1,50 +1,21 @@
-"use strict";
 "use client";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = TelaMarcadorInform;
-var react_1 = __importStar(require("react"));
-var meuMapa_1 = require("../mapa/meuMapa");
-var telaInfMarker_module_css_1 = __importDefault(require("@/styles/telaInfMarcador/telaInfMarker.module.css"));
-var ri_1 = require("react-icons/ri");
-var bi_1 = require("react-icons/bi");
-var fa6_1 = require("react-icons/fa6");
-var entregasClientesContext_1 = require("@/contexts/entregasClientesContext");
-var contextoUsuario_1 = require("@/contexts/contextoUsuario");
-var socketCliente_1 = __importDefault(require("@/socket/socketCliente"));
-var socket = (0, socketCliente_1.default)();
-function TelaMarcadorInform() {
-    var _a = (0, react_1.useContext)(meuMapa_1.contextMapa), mapaPronto = _a.mapaPronto, marcadores = _a.marcadores;
-    var _b = (0, react_1.useContext)(entregasClientesContext_1.ContextEntregasClientes), entregasDia = _b.entregasDia, atualizandoEntregas = _b.atualizandoEntregas;
-    var usuarioLogado = (0, react_1.useContext)(contextoUsuario_1.contextAutenticacao).usuarioLogado;
-    var telaInformMR = (0, react_1.useRef)(null);
-    var _c = (0, react_1.useState)(), entregaEvidencia = _c[0], setEntregaEvidencia = _c[1];
-    var _d = (0, react_1.useState)(), marcadorEvidencia = _d[0], setMarcadorEvidencia = _d[1];
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { contextMapa } from "../mapa/meuMapa";
+import estiloInform from "@/styles/telaInfMarcador/telaInfMarker.module.css";
+import { RiUserLocationFill } from "react-icons/ri";
+import { BiMessageCheck } from "react-icons/bi";
+import { FaMapLocationDot } from "react-icons/fa6";
+import { ContextEntregasClientes } from "@/contexts/entregasClientesContext";
+import { contextAutenticacao } from "@/contexts/contextoUsuario";
+import getSocket from "@/socket/socketCliente";
+var socket = getSocket();
+export default function TelaMarcadorInform() {
+    var _a = useContext(contextMapa), mapaPronto = _a.mapaPronto, marcadores = _a.marcadores;
+    var _b = useContext(ContextEntregasClientes), entregasDia = _b.entregasDia, atualizandoEntregas = _b.atualizandoEntregas;
+    var usuarioLogado = useContext(contextAutenticacao).usuarioLogado;
+    var telaInformMR = useRef(null);
+    var _c = useState(), entregaEvidencia = _c[0], setEntregaEvidencia = _c[1];
+    var _d = useState(), marcadorEvidencia = _d[0], setMarcadorEvidencia = _d[1];
     marcadores === null || marcadores === void 0 ? void 0 : marcadores.map(function (minhaMark, indexMark) {
         minhaMark.novoMarcador.addEventListener("click", function () {
             adicionandoTelaInform();
@@ -66,12 +37,12 @@ function TelaMarcadorInform() {
     };
     var removendoTelaInform = function () {
         if (telaInformMR.current) {
-            telaInformMR.current.classList.add(telaInfMarker_module_css_1.default.telaInformMarcadorFora);
+            telaInformMR.current.classList.add(estiloInform.telaInformMarcadorFora);
         }
     };
     var adicionandoTelaInform = function () {
         if (telaInformMR.current) {
-            telaInformMR.current.classList.remove(telaInfMarker_module_css_1.default.telaInformMarcadorFora);
+            telaInformMR.current.classList.remove(estiloInform.telaInformMarcadorFora);
         }
     };
     elementoMapa === null || elementoMapa === void 0 ? void 0 : elementoMapa.addEventListener("click", function (ev) {
@@ -86,8 +57,8 @@ function TelaMarcadorInform() {
         if ((_c = marcadorEvidencia === null || marcadorEvidencia === void 0 ? void 0 : marcadorEvidencia.dragging) === null || _c === void 0 ? void 0 : _c.enabled()) {
             marcadorEvidencia.dragging.disable();
             var novaCoord = marcadorEvidencia.getLatLng();
-            btnClick.classList.toggle(telaInfMarker_module_css_1.default.btnLocationAtivo);
-            elementoMarcadorFoto === null || elementoMarcadorFoto === void 0 ? void 0 : elementoMarcadorFoto.classList.toggle(telaInfMarker_module_css_1.default.marcadorEstaAtivo);
+            btnClick.classList.toggle(estiloInform.btnLocationAtivo);
+            elementoMarcadorFoto === null || elementoMarcadorFoto === void 0 ? void 0 : elementoMarcadorFoto.classList.toggle(estiloInform.marcadorEstaAtivo);
             if (entregaEvidencia) {
                 if (entregaEvidencia.id) {
                     var updateEntregaCoords = {
@@ -112,30 +83,30 @@ function TelaMarcadorInform() {
                     socket.emit("Atualizar Entrega", updateEntregaCoords);
                 }
             }
-            elementoMarcadorTexto === null || elementoMarcadorTexto === void 0 ? void 0 : elementoMarcadorTexto.classList.toggle(telaInfMarker_module_css_1.default.nomeComMarcadorAtivo);
+            elementoMarcadorTexto === null || elementoMarcadorTexto === void 0 ? void 0 : elementoMarcadorTexto.classList.toggle(estiloInform.nomeComMarcadorAtivo);
         }
         else {
             (_d = marcadorEvidencia === null || marcadorEvidencia === void 0 ? void 0 : marcadorEvidencia.dragging) === null || _d === void 0 ? void 0 : _d.enable();
-            btnClick.classList.toggle(telaInfMarker_module_css_1.default.btnLocationAtivo);
-            elementoMarcadorFoto === null || elementoMarcadorFoto === void 0 ? void 0 : elementoMarcadorFoto.classList.toggle(telaInfMarker_module_css_1.default.marcadorEstaAtivo);
-            elementoMarcadorTexto === null || elementoMarcadorTexto === void 0 ? void 0 : elementoMarcadorTexto.classList.toggle(telaInfMarker_module_css_1.default.nomeComMarcadorAtivo);
+            btnClick.classList.toggle(estiloInform.btnLocationAtivo);
+            elementoMarcadorFoto === null || elementoMarcadorFoto === void 0 ? void 0 : elementoMarcadorFoto.classList.toggle(estiloInform.marcadorEstaAtivo);
+            elementoMarcadorTexto === null || elementoMarcadorTexto === void 0 ? void 0 : elementoMarcadorTexto.classList.toggle(estiloInform.nomeComMarcadorAtivo);
         }
     };
-    (0, react_1.useEffect)(function () { }, [usuarioLogado]);
+    useEffect(function () { }, [usuarioLogado]);
     return (<>
-      <div className={"".concat(telaInfMarker_module_css_1.default.telaInformMarcador, " ").concat(telaInfMarker_module_css_1.default.telaInformMarcadorFora)} ref={telaInformMR}>
-        <div className={telaInfMarker_module_css_1.default.areaBTNSinfMR}>
+      <div className={"".concat(estiloInform.telaInformMarcador, " ").concat(estiloInform.telaInformMarcadorFora)} ref={telaInformMR}>
+        <div className={estiloInform.areaBTNSinfMR}>
           <button onClick={function (ev) {
             liberandoPontoMarcador(ev.currentTarget);
         }}>
-            <ri_1.RiUserLocationFill />
+            <RiUserLocationFill />
           </button>
 
           <button onClick={function () {
             // enviarMensagemCliente();
             enviarMinhaMSG();
         }}>
-            <bi_1.BiMessageCheck />
+            <BiMessageCheck />
           </button>
 
           <button onClick={function () {
@@ -149,11 +120,11 @@ function TelaMarcadorInform() {
                 });
             }
         }}>
-            <fa6_1.FaMapLocationDot />
+            <FaMapLocationDot />
           </button>
         </div>
 
-        <div className={telaInfMarker_module_css_1.default.areaInformacoesMR}>
+        <div className={estiloInform.areaInformacoesMR}>
           <h3>Entrega para: {entregaEvidencia === null || entregaEvidencia === void 0 ? void 0 : entregaEvidencia.nome}</h3>
           <h3>Contato: {entregaEvidencia === null || entregaEvidencia === void 0 ? void 0 : entregaEvidencia.telefone}</h3>
           <h3>Bairro: {entregaEvidencia === null || entregaEvidencia === void 0 ? void 0 : entregaEvidencia.bairro}</h3>

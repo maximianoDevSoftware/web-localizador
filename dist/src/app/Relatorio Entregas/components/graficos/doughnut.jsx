@@ -1,33 +1,8 @@
-"use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var react_1 = __importStar(require("react"));
-var react_chartjs_2_1 = require("react-chartjs-2");
-var chart_js_1 = require("chart.js");
-var entregasClientesContext_1 = require("@/contexts/entregasClientesContext");
-chart_js_1.Chart.register(chart_js_1.ArcElement, chart_js_1.Tooltip, chart_js_1.Legend);
+import React, { useContext } from "react";
+import { Doughnut } from "react-chartjs-2";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { ContextEntregasClientes } from "@/contexts/entregasClientesContext";
+ChartJS.register(ArcElement, Tooltip, Legend);
 var definirDadosGrafico = function (mes, semana, dia) {
     var data = {
         labels: ["Mês", "Semana", "Dia"],
@@ -68,7 +43,7 @@ var options = {
     },
 };
 var DoughnutChart = function () {
-    var entregasRelatorio = (0, react_1.useContext)(entregasClientesContext_1.ContextEntregasClientes).entregasRelatorio;
+    var entregasRelatorio = useContext(ContextEntregasClientes).entregasRelatorio;
     var hoje = new Date();
     var diaHoje = [hoje.getDate(), hoje.getMonth() + 1, hoje.getFullYear()];
     var entregasDoMes = entregasRelatorio === null || entregasRelatorio === void 0 ? void 0 : entregasRelatorio.filter(function (entrega) {
@@ -132,7 +107,7 @@ var DoughnutChart = function () {
         ? valorTotalEntregas(entregasDoDia)
         : 0;
     return (<div className={"chart-container2"}>
-      <react_chartjs_2_1.Doughnut data={definirDadosGrafico(entregasDoMesTotal, entregasDaSemanaTotal, entregasDoDiaTotal)} options={options}/>
+      <Doughnut data={definirDadosGrafico(entregasDoMesTotal, entregasDaSemanaTotal, entregasDoDiaTotal)} options={options}/>
     </div>);
 };
-exports.default = DoughnutChart;
+export default DoughnutChart;

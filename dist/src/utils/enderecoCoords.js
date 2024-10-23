@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,10 +34,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.gerandoDia = void 0;
-exports.end4Coords = end4Coords;
-function end4Coords(endereco) {
+export function end4Coords(endereco) {
     return __awaiter(this, void 0, void 0, function () {
         var url, response, data, coordinates, latitude, longitude, meusValores;
         return __generator(this, function (_a) {
@@ -63,7 +59,7 @@ function end4Coords(endereco) {
         });
     });
 }
-var gerandoDia = function () {
+export var gerandoDia = function () {
     var dataAgora = new Date();
     var dia = dataAgora.getDate();
     var mes = dataAgora.getMonth() + 1; // Mês começa em 0 (janeiro), então adicionamos 1
@@ -71,4 +67,3 @@ var gerandoDia = function () {
     var numDia = [dia, mes, ano];
     return numDia;
 };
-exports.gerandoDia = gerandoDia;
